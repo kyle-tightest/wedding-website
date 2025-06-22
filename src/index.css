@@ -1,0 +1,302 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&family=Press+Start+2P&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .font-script {
+    font-family: 'Great Vibes', cursive;
+  }
+
+  .font-comic-sans {
+    font-family: 'Comic Sans MS';
+  }
+
+  Elegant scrollbar
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #ea0808, #d20707);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #d20707, #af0606);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    opacity: 0;
+    animation: fade-in 1s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slide-up 1s ease-out 0.5s forwards;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce 2s infinite;
+  }
+
+  .animate-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  .bg-glass {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .hover-trigger .hover-target {
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .hover-trigger:hover .hover-target {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .premium-border {
+    border: 1px solid rgba(234, 179, 8, 0.2);
+  }
+
+  .premium-shadow {
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1),
+                0 2px 8px -3px rgba(234, 179, 8, 0.1);
+  }
+
+  .shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+  }
+
+  /* Premium button styles */
+  .btn-premium {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: 0.5s;
+  }
+
+  .btn-premium:hover::before {
+    left: 100%;
+  }
+
+  /* Elegant card hover effect */
+  .card-premium {
+    transition: all 0.3s ease;
+  }
+
+  .card-premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(234, 179, 8, 0.1));
+    opacity: 0;
+    transition: 0.3s;
+  }
+
+  .card-premium:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-premium:hover::before {
+    opacity: 1;
+  }
+
+  /* Shimmering text effect */
+  .text-shimmer {
+    background: linear-gradient(
+      to right,
+      #ea0808 20%,
+      #554848 30%,
+      #813434 70%,
+      #ea0808 80%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: shimmer 14s linear infinite;
+  }
+
+  /* Elegant input focus effect */
+  .input-premium {
+    transition: all 0.3s ease;
+  }
+
+  .input-premium:focus {
+    box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.2);
+    transform: scale(1.01);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-5%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.timeline-container {
+  position: relative;
+}
+
+.timeline-container::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, #eab308, transparent);
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 2px solid #eab308;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+}
+
+@font-face {
+  font-family: 'Olive';
+  src: local('Olive'), url(./fonts/olive.ttf) format('truetype');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+  font-family: 'LaGagliane';
+  src: local('LaGagliane'), url(./fonts/LaGagliane.otf) format('opentype');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+  font-family: 'SispectlyHarmonies';
+  src: local('SispectlyHarmonies') url(./fonts/SispectlyHarmonies.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'SispectlyHarmoniesItalic';
+  src: local('SispectlyHarmoniesItalic'), url(./fonts/SispectlyHarmoniesItalic.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Soul';
+  src: local('Soul'), url(./fonts/Baskervville-Regular.ttf) format('opentype');
+}
+
+
+@font-face {
+  font-family: 'Baskerville';
+  src: local('Baskerville') url(./fonts/Baskervville-Regular.ttf) format('truetype');
+}
