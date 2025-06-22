@@ -5,6 +5,7 @@ import Countdown from './components/Countdown';
 import LoveBirdsGame from './components/LoveBirdsGame';
 import PasswordModal from './components/PasswordModal';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -336,6 +337,7 @@ was something special.
         </div>
       </footer>
       <Analytics />
+      <SpeedInsights />
     </div>
   );
 }
