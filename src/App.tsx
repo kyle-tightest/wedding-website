@@ -10,7 +10,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [storyImageIndex, setStoryImageIndex] = useState(0);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
   const weddingDate = new Date('2026-02-07T00:00:00');
   
   // Update these paths to match your images in the public/img folder
@@ -35,13 +35,6 @@ function App() {
     "/img/story-9.jpg", // Added new image
     "/img/story-10.jpg", // Added new image
   ];
-
-  useEffect(() => {
-    const authenticated = localStorage.getItem('weddingAuthenticated');
-    if (authenticated === 'true') {
-      setIsAuthenticated(true);
-    }
-  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -87,10 +80,6 @@ function App() {
 
     return () => observer.disconnect();
   }, [isAuthenticated]);
-
-  if (!isAuthenticated) {
-    return <PasswordModal onCorrectPassword={() => setIsAuthenticated(true)} />;
-  }
 
   const nextStoryImage = () => {
     setStoryImageIndex((prevIndex) =>
