@@ -4,6 +4,7 @@ import HeartBackground from './components/HeartBackground';
 import Countdown from './components/Countdown';
 import LoveBirdsGame from './components/LoveBirdsGame';
 import PasswordModal from './components/PasswordModal';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -334,6 +335,7 @@ was something special.
           <p className="font-comic-sans tracking-widest">Robin & Kyle Software Company™</p>
         </div>
       </footer>
+      <Analytics />
     </div>
   );
 }
