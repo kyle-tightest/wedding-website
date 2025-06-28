@@ -204,10 +204,10 @@ was something special.
           <div className="timeline-container py-12">
             <div className="grid md:grid-cols-2 gap-12">
               {[
-                { icon: Clock, title: "Ceremony", time: "2:00 PM - 3:30 PM", desc: "Join us as we exchange vows" },
-                { icon: Camera, title: "Photos", time: "3:30 PM - 5:00 PM", desc: "Capture memories with us" },
+                { icon: Clock, title: "Ceremony", time: "4:00 PM - 5:00 PM", desc: "Join us as we exchange vows" },
+                { icon: Camera, title: "Photos", time: "5:00 PM - 6:00 PM", desc: "Capture memories with us" },
                 { icon: Glass, title: "Cocktail Hour", time: "5:00 PM - 6:00 PM", desc: "Enjoy drinks & hors d'oeuvres" },
-                { icon: Music, title: "Reception", time: "6:00 PM - 11:00 PM", desc: "Dance the night away" }
+                { icon: Music, title: "Reception", time: "6:00 PM - 12:00 PM", desc: "Dance the night away" }
               ].map((event, index) => (
                 <div key={index} className={`timeline-item ${index % 2 === 0 ? 'text-right pr-12' : 'pl-12'} animate-on-scroll opacity-0 translate-y-8 duration-1000`} style={{ transitionDelay: `${index * 200}ms` }}>
                   <div className="bg-white p-6 md:p-8 shadow-lg rounded-lg hover-trigger transform hover:scale-105 transition-all duration-300 premium-border premium-shadow card-premium animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]" style={{ transitionDelay: `${index * 200}ms` }}>
@@ -230,27 +230,23 @@ was something special.
             {[
               {
                 q: "What is the dress code?",
-                a: "The dress code is formal/black tie optional. We encourage guests to wear evening gowns, cocktail dresses, or suits."
+                a: "TBD"
               },
               {
                 q: "Can I bring a plus one?",
-                a: "We have reserved plus ones for guests as indicated on their invitations. Please refer to your invitation for the number of seats reserved in your honor."
-              },
-              {
-                q: "Are children welcome?",
-                a: "While we love your little ones, our wedding will be an adults-only celebration. We hope this advance notice allows you to arrange childcare."
+                a: "TBD"
               },
               {
                 q: "Is there parking at the venue?",
-                a: "Yes, the Grand Plaza Hotel offers both self-parking and valet services. Valet parking will be complimentary for all wedding guests."
+                a: "TBD"
               },
               {
                 q: "Are there accommodations nearby?",
-                a: "We have secured a block of rooms at the Grand Plaza Hotel at a special rate. Please use code 'SM2024' when booking."
+                a: "TBD"
               },
               {
                 q: "What time should I arrive?",
-                a: "Please plan to arrive 15-30 minutes before the ceremony start time of 2:00 PM to allow time for seating."
+                a: "Please plan to arrive 15-30 minutes before the ceremony start time of 4:00 PM to allow time for seating."
               }
             ].map((faq, index) => (
               <div 
@@ -290,11 +286,11 @@ was something special.
               <label className="block text-gray-700 mb-2 font-serif tracking-wide">Meal Preference</label>
               <select className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transform transition-transform duration-200 hover:scale-[1.01] premium-border input-premium text-gray-700">
                 <option value="">Please select a meal option</option>
-                <option value="beef">Beef Tenderloin</option>
-                <option value="chicken">Herb-Roasted Chicken</option>
-                <option value="fish">Pan-Seared Salmon</option>
-                <option value="vegetarian">Vegetarian Wellington</option>
-                <option value="vegan">Vegan Wild Mushroom Risotto</option>
+                <option value="beef">Afval Pudding</option>
+                <option value="chicken">Banana Mince</option>
+                <option value="fish">12 year matured steak (off)</option>
+                <option value="vegetarian">Hadeda</option>
+                <option value="vegan">Brocolli 5-ways</option>
               </select>
             </div>
             <button
