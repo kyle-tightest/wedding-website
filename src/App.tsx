@@ -223,7 +223,7 @@ was something special.
         </div>
       </section>
 
-      <section className="py-32 px-4 bg-gradient-radial from-gray-50 to-gray-100">
+      <section className="pt-32 pb-16 px-4 bg-gradient-radial from-gray-50 to-gray-100">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-16 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">Frequently Asked Questions</h2>
           <div className="grid gap-8">
@@ -247,6 +247,10 @@ was something special.
               {
                 q: "What time should I arrive?",
                 a: "Please plan to arrive 15-30 minutes before the ceremony start time of 4:00 PM to allow time for seating."
+              },
+              {
+                q: "How do I RSVP?",
+                a: "Please scroll down 😊"
               }
             ].map((faq, index) => (
               <div 
@@ -262,7 +266,7 @@ was something special.
         </div>
       </section>
 
-      <section className="py-32 px-4 bg-gray-100">
+      <section className="pt-16 pb-32 px-4 bg-gray-100">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-12 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">RSVP</h2>
           <form className="space-y-6 bg-white p-6 sm:p-10 md:p-12 rounded-lg shadow-lg animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] premium-border premium-shadow">
