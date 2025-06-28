@@ -4,6 +4,7 @@ import HeartBackground from './components/HeartBackground';
 import Countdown from './components/Countdown';
 import LoveBirdsGame from './components/LoveBirdsGame';
 import PasswordModal from './components/PasswordModal';
+import MusicPlayer from './components/MusicPlayer';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
@@ -11,6 +12,9 @@ function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [storyImageIndex, setStoryImageIndex] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [formData, setFormData] = useState({ name: '', email: '', meal: '' });
+  const [formErrors, setFormErrors] = useState({ email: '', general: '' });
+  const [formStatus, setFormStatus] = useState(''); // '', 'submitting', 'success', 'error'
   const weddingDate = new Date('2026-02-07T00:00:00');
   
   // Update these paths to match your images in the public/img folder
@@ -91,6 +95,60 @@ function App() {
     setStoryImageIndex((prevIndex) =>
       prevIndex === 0 ? storyImages.length - 1 : prevIndex - 1
     );
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear errors on input change
+    if (name === 'email' && formErrors.email) {
+      setFormErrors(prev => ({ ...prev, email: '', general: '' }));
+    }
+    if (formErrors.general) {
+      setFormErrors(prev => ({ ...prev, general: '' }));
+    }
+  };
+
+  const validateEmail = (email: string) => {
+    // A simple regex for email validation
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const handleRsvpSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormErrors({ email: '', general: '' });
+
+    if (!formData.email || !validateEmail(formData.email)) {
+      setFormErrors(prev => ({ ...prev, email: 'Please enter a valid email address.' }));
+      return;
+    }
+
+    if (!formData.meal) {
+      setFormErrors(prev => ({ ...prev, general: 'Please select a meal option.' }));
+      return;
+    }
+
+    setFormStatus('submitting');
+
+    try {
+      const response = await fetch('/api/rsvp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      setFormStatus(response.ok ? 'success' : 'error');
+      if (!response.ok) {
+        setFormErrors({ email: '', general: 'Submission failed. Please try again.' });
+        setTimeout(() => setFormStatus(''), 3000);
+      }
+    } catch (error) {
+      console.error('RSVP submission error:', error);
+      setFormStatus('error');
+      setFormErrors({ email: '', general: 'An unexpected error occurred. Please try again.' });
+      setTimeout(() => setFormStatus(''), 3000);
+    }
   }
 
   return (
@@ -269,26 +327,43 @@ was something special.
       <section className="pt-16 pb-32 px-4 bg-gray-100">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-12 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">RSVP</h2>
-          <form className="space-y-6 bg-white p-6 sm:p-10 md:p-12 rounded-lg shadow-lg animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] premium-border premium-shadow">
+          <form onSubmit={handleRsvpSubmit} className="space-y-6 bg-white p-6 sm:p-10 md:p-12 rounded-lg shadow-lg animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] premium-border premium-shadow">
             <div>
               <label className="block text-gray-700 mb-2 font-serif tracking-wide">Full Name</label>
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
                 className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transform transition-transform duration-200 hover:scale-[1.01] premium-border input-premium text-gray-700"
                 placeholder="Enter your full name"
+                required
               />
             </div>
             <div>
               <label className="block text-gray-700 mb-2 font-serif tracking-wide">Email</label>
               <input
                 type="email"
-                className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transform transition-transform duration-200 hover:scale-[1.01] premium-border input-premium text-gray-700"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:border-transparent transform transition-transform duration-200 hover:scale-[1.01] premium-border input-premium text-gray-700 ${
+                  formErrors.email ? 'border-red-500 focus:ring-red-500' : 'focus:ring-gold-500'
+                }`}
                 placeholder="Enter your email"
+                required
               />
+              {formErrors.email && <p className="text-red-500 text-sm mt-2">{formErrors.email}</p>}
             </div>
             <div>
               <label className="block text-gray-700 mb-2 font-serif tracking-wide">Meal Preference</label>
-              <select className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transform transition-transform duration-200 hover:scale-[1.01] premium-border input-premium text-gray-700">
+              <select
+                name="meal"
+                value={formData.meal}
+                onChange={handleInputChange}
+                className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transform transition-transform duration-200 hover:scale-[1.01] premium-border input-premium text-gray-700"
+                required
+              >
                 <option value="">Please select a meal option</option>
                 <option value="beef">Afval Pudding</option>
                 <option value="chicken">Banana Mince</option>
@@ -297,12 +372,18 @@ was something special.
                 <option value="vegan">Brocolli 5-ways</option>
               </select>
             </div>
+            {formErrors.general && (
+              <p className="text-red-500 text-sm text-center -mt-2">{formErrors.general}</p>
+            )}
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-red-400 via-red-500 to-red-400 text-white py-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center space-x-2 font-serif tracking-wider btn-premium"
+              disabled={formStatus === 'submitting' || formStatus === 'success'}
+              className="w-full bg-gradient-to-r from-red-400 via-red-500 to-red-400 text-white py-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg flex items-center justify-center space-x-2 font-serif tracking-wider btn-premium disabled:opacity-70 disabled:cursor-not-allowed"
             >
               <Send className="w-5 h-5" />
-              <span>Send RSVP</span>
+              <span>
+                {formStatus === 'submitting' ? 'Sending...' : formStatus === 'success' ? 'RSVP Sent!' : formStatus === 'error' ? 'Error, Try Again' : 'Send RSVP'}
+              </span>
             </button>
           </form>
         </div>
@@ -327,6 +408,7 @@ was something special.
       </footer>
       <Analytics />
       <SpeedInsights />
+      <MusicPlayer />
     </div>
   );
 }
