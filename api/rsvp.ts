@@ -1,5 +1,6 @@
 import { Pool } from 'pg';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { serialize } from 'cookie';
 
 // Initialize the connection pool.
 // The connection string is read from the POSTGRES_URL environment variable.
@@ -33,6 +34,16 @@ export default async function handler(
       ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, meal_preference = EXCLUDED.meal_preference, submitted_at = CURRENT_TIMESTAMP;
     `;
     await pool.query(query, [name, email, meal]);
+
+    const cookie = serialize('rsvp_submitted', 'true', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+      path: '/',
+      sameSite: 'lax',
+    });
+    response.setHeader('Set-Cookie', cookie);
+
     return response.status(200).json({ message: 'RSVP submitted successfully!' });
   } catch (error) {
     console.error('Database Error:', error);
