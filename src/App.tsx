@@ -269,9 +269,9 @@ was something special.
               ].map((event, index) => (
                 <div key={index} className={`timeline-item ${index % 2 === 0 ? 'text-right pr-12' : 'pl-12'} animate-on-scroll opacity-0 translate-y-8 duration-1000`} style={{ transitionDelay: `${index * 200}ms` }}>
                   <div className="bg-white p-6 md:p-8 shadow-lg rounded-lg hover-trigger transform hover:scale-105 transition-all duration-300 premium-border premium-shadow card-premium animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]" style={{ transitionDelay: `${index * 200}ms` }}>
-                    <event.icon className="w-8 h-8 text-gold-500 mx-auto mb-4" />
-                    <h3 className="text-2xl font-serif mb-2 text-gray-800">{event.title}</h3>
-                    <p className="text-gold-600">{event.time}</p>
+                    <event.icon className="w-8 h-8 text-red-500 mx-auto mb-4" />
+                    <h3 className="text-2xl font-serif mb-2">{event.title}</h3>
+                    <p>{event.time}</p>
                     <p className="text-sm text-gray-500 mt-2 hover-target">{event.desc}</p>
                   </div>
                 </div>

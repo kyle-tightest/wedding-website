@@ -89,12 +89,12 @@
   }
 
   .premium-border {
-    border: 1px solid rgba(234, 179, 8, 0.2);
+    border: 1px solid rgba(105, 8, 8, 0.2);
   }
 
   .premium-shadow {
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1),
-                0 2px 8px -3px rgba(234, 179, 8, 0.1);
+                0 2px 8px -3px rgba(234, 8, 8, 0.1);
   }
 
   .shake {
@@ -139,7 +139,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(234, 179, 8, 0.1));
+    background: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.1));
     opacity: 0;
     transition: 0.3s;
   }
@@ -239,7 +239,7 @@
   content: '';
   position: absolute;
   width: 2px;
-  background: linear-gradient(to bottom, transparent, #eab308, transparent);
+  background: linear-gradient(to bottom, transparent, #ea0808, transparent);
   top: 0;
   bottom: 0;
   left: 50%;

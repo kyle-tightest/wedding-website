@@ -145,7 +145,7 @@ const MusicPlayer = () => {
           setIsPlayerVisible(true);
           setIsPlaying(true); // Start playing automatically when opened
         }}
-        className="fixed bottom-8 right-8 bg-red-500 text-white p-4 rounded-full shadow-lg z-50 transform hover:scale-110 transition-transform duration-300 animate-pulse"
+        className="fixed bottom-8 right-8 bg-black text-red-400 p-4 rounded-full shadow-lg z-50 transform hover:scale-110 transition-transform duration-300 animate-pulse"
         aria-label="Open Music Player"
       >
         <Music4 size={24} />
