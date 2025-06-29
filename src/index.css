@@ -275,6 +275,19 @@
   animation: fadeIn 0.2s ease-out;
 }
 
+@keyframes wave {
+  0%, 40%, 100% {
+    transform: scaleY(0.2);
+  }
+  20% {
+    transform: scaleY(1.0);
+  }
+}
+
+.animate-wave {
+  transform-origin: bottom;
+  animation: wave 1.2s ease-in-out infinite;
+}
 
 @font-face {
   font-family: 'Olive';
