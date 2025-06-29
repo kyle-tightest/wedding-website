@@ -479,9 +479,11 @@ was something special.
         <Starfield />
         <div className="relative z-10">
           <p className="font-soul text-3xl sm:text-4xl mb-4 text-shimmer">We can't wait to celebrate with you!</p>
-          <div className="mt-4 flex items-center justify-center space-x-2">
-            <p className="font-comic-sans tracking-widest">Built with</p>
-            <Heart className="w-5 h-5 text-red-500 animate-pulse" />
+          <div className="mt-4">
+            <div className="flex items-center justify-center space-x-2">
+              <p className="font-comic-sans tracking-widest">Built with</p>
+              <Heart className="w-5 h-5 text-red-500 animate-pulse" />
+            </div>
             <p className="font-comic-sans tracking-widest">by Robin & Kyle Software Company™</p>
           </div>
         </div>
