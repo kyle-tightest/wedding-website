@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Heart, Calendar, Clock, MapPin, Send, Camera, Gift, Music, Cake, Glasses as Glass, ChevronLeft, ChevronRight } from 'lucide-react';
 import HeartBackground from './components/HeartBackground';
+import Starfield from './components/Starfield';
 import Countdown from './components/Countdown';
 import LoveBirdsGame from './components/LoveBirdsGame';
 import PasswordModal from './components/PasswordModal';
@@ -399,11 +400,15 @@ was something special.
         </div>
       </section>
 
-      <footer className="bg-gradient-to-r  via-blacktext-white py-16 text-center">
-        <p className="font-soul text-3xl sm:text-4xl mb-4 text-shimmer">We can't wait to celebrate with you!</p>
-        <div className="mt-4 flex items-center justify-center space-x-2">
-          <Heart className="w-5 h-5 text-red-500 animate-pulse" />
-          <p className="font-comic-sans tracking-widest">Robin & Kyle Software Company™</p>
+      <footer className="relative bg-black text-white py-24 text-center overflow-hidden">
+        <Starfield />
+        <div className="relative z-10">
+          <p className="font-soul text-3xl sm:text-4xl mb-4 text-shimmer">We can't wait to celebrate with you!</p>
+          <div className="mt-4 flex items-center justify-center space-x-2">
+            <p className="font-comic-sans tracking-widest">Built with</p>
+            <Heart className="w-5 h-5 text-red-500 animate-pulse" />
+            <p className="font-comic-sans tracking-widest">by Robin & Kyle Software Company™</p>
+          </div>
         </div>
       </footer>
       <Analytics />
