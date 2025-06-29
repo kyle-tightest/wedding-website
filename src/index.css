@@ -289,6 +289,28 @@
   animation: wave 1.2s ease-in-out infinite;
 }
 
+/* Add this to your src/index.css file */
+
+@keyframes disintegrate-animation {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0) grayscale(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.1);
+    filter: blur(15px) grayscale(80%);
+  }
+}
+
+.disintegrate {
+  animation: disintegrate-animation 2s forwards ease-in;
+  /* Prevent interaction with the disappearing elements */
+  pointer-events: none;
+}
+
+
 
 @font-face {
   font-family: 'Olive';
