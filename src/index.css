@@ -174,7 +174,7 @@
   }
 
   .input-premium:focus {
-    box-shadow: 0 0 0 2px rgba(234, 179, 8, 0.2);
+    box-shadow: 0 0 0 2px rgba(234, 8, 8, 0.2);
     transform: scale(1.01);
   }
 }
@@ -257,13 +257,13 @@
   width: 16px;
   height: 16px;
   background: #fff;
-  border: 2px solid #eab308;
+  border: 2px solid #bb0808;
   border-radius: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-  box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+  box-shadow: 0 0 15px rgba(122, 5, 5, 0.3);
 }
 
 @keyframes fadeIn {

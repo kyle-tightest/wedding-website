@@ -169,7 +169,7 @@ function App() {
         <div className="relative h-full flex items-center justify-center">
           <div className="text-center text-white z-10 px-4">
             <p className="text-xl md:text-2xl font-soul mb-4 animate-fade-in tracking-wider">Together with their families</p>
-            <h1 className="text-6xl md:text-7xl lg:text-9xl font-soul mb-6 text-shadow text-shimmer">Robin & Kyle</h1>
+            <h1 className="text-6xl md:text-7xl lg:text-9xl font-soul mb-6 text-shadow">Robin & Kyle</h1>
             <p className="text-xl md:text-2xl font-soul animate-slide-up tracking-widest">Request the pleasure of your company</p>
             <p className="text-xl md:text-2xl font-soul animate-slide-up tracking-widest">at our wedding</p>
             <div className="mt-12 flex items-center justify-center space-x-2 animate-bounce-slow bg-glass py-4 px-8 rounded-full inline-block premium-border">
@@ -260,7 +260,7 @@ was something special.
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-16 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">The Big Day</h2>
           <div className="timeline-container py-12">
-            <div className="grid md:grid-cols-2 gap-12">
+            <div className="grid md:grid-cols-2 gap-12 ">
               {[
                 { icon: Clock, title: "Ceremony", time: "4:00 PM - 5:00 PM", desc: "Join us as we exchange vows" },
                 { icon: Camera, title: "Photos", time: "5:00 PM - 6:00 PM", desc: "Capture memories with us" },
