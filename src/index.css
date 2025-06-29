@@ -315,6 +315,7 @@
 @font-face {
   font-family: 'Olive';
   src: local('Olive'), url(./fonts/olive.ttf) format('truetype');
+  font-display: swap;
   /* other formats include: 'woff2', 'truetype, 'opentype',
                             'embedded-opentype', and 'svg' */
 }
@@ -322,6 +323,7 @@
 @font-face {
   font-family: 'LaGagliane';
   src: local('LaGagliane'), url(./fonts/LaGagliane.otf) format('opentype');
+  font-display: swap;
   /* other formats include: 'woff2', 'truetype, 'opentype',
                             'embedded-opentype', and 'svg' */
 }
@@ -329,20 +331,24 @@
 @font-face {
   font-family: 'SispectlyHarmonies';
   src: local('SispectlyHarmonies') url(./fonts/SispectlyHarmonies.otf) format('opentype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'SispectlyHarmoniesItalic';
   src: local('SispectlyHarmoniesItalic'), url(./fonts/SispectlyHarmoniesItalic.otf) format('opentype');
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Soul';
   src: local('Soul'), url(./fonts/LTSoul-SemiBold.otf) format('opentype');
+  font-display: swap;
 }
 
 
 @font-face {
   font-family: 'Baskerville';
   src: local('Baskerville') url(./fonts/Baskervville-Regular.ttf) format('truetype');
+  font-display: swap;
 }
