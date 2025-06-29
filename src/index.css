@@ -289,6 +289,7 @@
   animation: wave 1.2s ease-in-out infinite;
 }
 
+
 @font-face {
   font-family: 'Olive';
   src: local('Olive'), url(./fonts/olive.ttf) format('truetype');
@@ -315,7 +316,7 @@
 
 @font-face {
   font-family: 'Soul';
-  src: local('Soul'), url(./fonts/Baskervville-Regular.ttf) format('opentype');
+  src: local('Soul'), url(./fonts/LTSoul-SemiBold.otf) format('opentype');
 }
 
 
