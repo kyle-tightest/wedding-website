@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { Heart, Calendar, Clock, MapPin, Send, Camera, Gift, Music, Cake, Glasses as Glass, ChevronLeft, ChevronRight } from 'lucide-react';
 import Cookies from 'js-cookie';
 import HeartBackground from './components/HeartBackground';
-import Starfield from './components/Starfield';
 import Countdown from './components/Countdown';
-import LoveBirdsGame from './components/LoveBirdsGame';
 import PasswordModal from './components/PasswordModal';
-import MusicPlayer from './components/MusicPlayer';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+
+// Lazy load non-critical components to improve initial page load time.
+const Starfield = lazy(() => import('./components/Starfield'));
+const LoveBirdsGame = lazy(() => import('./components/LoveBirdsGame'));
+const MusicPlayer = lazy(() => import('./components/MusicPlayer'));
 
 function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -468,15 +470,19 @@ was something special.
       <section className="py-32 px-4 bg-gradient-radial from-gray-50 to-gray-100">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-8 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">Love Birds Game</h2>
-          <div className="flex items-center justify-center mb-8">
-            <Heart className="w-12 h-12 text-red-500 animate-pulse" />
-          </div>
-          <LoveBirdsGame />
+          <Suspense fallback={<div className="h-64" />}>
+            <div className="flex items-center justify-center mb-8">
+              <Heart className="w-12 h-12 text-red-500 animate-pulse" />
+            </div>
+            <LoveBirdsGame />
+          </Suspense>
         </div>
       </section>
 
       <footer className="relative bg-black text-white py-24 text-center overflow-hidden">
-        <Starfield />
+        <Suspense fallback={null}>
+          <Starfield />
+        </Suspense>
         <div className="relative z-10">
           <p className="font-soul text-3xl sm:text-4xl mb-4 text-shimmer">We can't wait to celebrate with you!</p>
           <div className="mt-4">
@@ -490,7 +496,9 @@ was something special.
       </footer>
       <Analytics />
       <SpeedInsights />
-      <MusicPlayer />
+      <Suspense fallback={null}>
+        <MusicPlayer />
+      </Suspense>
     </div>
   );
 }
