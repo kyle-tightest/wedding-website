@@ -310,8 +310,6 @@
   pointer-events: none;
 }
 
-
-
 @font-face {
   font-family: 'Olive';
   src: local('Olive'), url(./fonts/olive.ttf) format('truetype');

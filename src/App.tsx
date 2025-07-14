@@ -14,8 +14,10 @@ const MusicPlayer = lazy(() => import('./components/MusicPlayer'));
 
 function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isHeroTransitioning, setIsHeroTransitioning] = useState(true);
   const [storyImageIndex, setStoryImageIndex] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // Tailwind's md breakpoint
   const weddingDate = new Date('2026-02-07T00:00:00');
 
   // RSVP Form State
@@ -60,6 +62,38 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => prevIndex + 1);
+    }, 15000); // Shift every 15 seconds
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleHeroTransitionEnd = () => {
+    if (currentImageIndex >= heroImages.length) {
+      setIsHeroTransitioning(false); // Disable transition for the jump
+      setCurrentImageIndex(0); // Jump back to the start
+    }
+  };
+
+  useEffect(() => {
+    // Re-enable transitions after a jump
+    if (!isHeroTransitioning) {
+      // A minimal timeout lets React update the DOM before re-enabling transitions
+      const timeout = setTimeout(() => setIsHeroTransitioning(true), 50);
+      return () => clearTimeout(timeout);
+    }
+  }, [isHeroTransitioning]);
+
+  useEffect(() => {
     if (isDisintegrating) {
       // The animation is 2s long. Redirect after it finishes.
       const timer = setTimeout(() => {
@@ -70,15 +104,10 @@ function App() {
     }
   }, [isDisintegrating]);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => 
-        prevIndex === heroImages.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 10000); // Changed interval to 7 seconds
-
-    return () => clearInterval(timer);
-  }, [heroImages.length]);
+  const imagesPerView = isMobile ? 1 : 3;
+  const imageWidthVw = 100 / imagesPerView;
+  const containerWidthVw = heroImages.length * 2 * imageWidthVw;
+  const transformX = `translateX(calc(-${currentImageIndex} * ${imageWidthVw}vw))`;
 
   useEffect(() => {
     const storyImageTimer = setInterval(() => {
@@ -225,16 +254,26 @@ function App() {
 
       <section className="h-[90vh] relative overflow-hidden">
         <HeartBackground />
-        {heroImages.map((image, index) => (
+        <div
+          className="absolute top-0 left-0 h-full flex"
+          onTransitionEnd={handleHeroTransitionEnd}
+          style={{
+            width: `${containerWidthVw}vw`,
+            transform: transformX,
+            transition: isHeroTransitioning ? 'transform 1.5s ease-in-out' : 'none',
+          }}
+        >
+          {[...heroImages, ...heroImages].map((image, index) => (
           <div
             key={index}
-            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-[10000ms] ${
-              index === currentImageIndex ? 'opacity-100' : 'opacity-0' // Hero image opacity
-            }`}
-            style={{
-              backgroundImage: `url("${image}")`,
-            }} />
-        ))}
+            className={`h-full flex-shrink-0 bg-cover bg-center box-border ${!isMobile ? 'border-r-8 border-white' : ''}`}
+            style={{ 
+              width: `${imageWidthVw}vw`,
+              backgroundImage: `url("${image}")` 
+            }}
+          />
+          ))}
+        </div>
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative h-full flex items-center justify-center">
           <div className="text-center text-white z-10 px-4">
