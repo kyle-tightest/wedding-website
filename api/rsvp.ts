@@ -35,9 +35,17 @@ export default async function handler(
 
     if (guestResult.rowCount === 0) {
       console.log("Someone is attempting to RSVP but they're not on the guest list.", name, email, meal);
-      // If the name is not on the guest list, we exit early with a generic
-      // success message. This prevents leaking information about who is on the list.
-      // No cookie is set, no email is sent, and no RSVP is recorded.
+      // Save unauthorized RSVP attempt
+      const ip = request.headers['x-forwarded-for'] || request.socket.remoteAddress || null;
+      try {
+        await pool.query(
+          `INSERT INTO unauthorized_rsvp_attempts (name, email, meal, ip_address) VALUES ($1, $2, $3, $4);`,
+          [name, email, meal, Array.isArray(ip) ? ip[0] : ip]
+        );
+      } catch (err) {
+        console.error('Failed to log unauthorized RSVP attempt:', err);
+      }
+      // Exit early with a generic success message
       return response.status(200).json({ message: 'RSVP submitted successfully!' });
     }
 
