@@ -485,7 +485,6 @@ export default function LoveBirdsGame() {
               if (e.target.value.trim()) setNameError("");
             }}
             maxLength={64}
-            autoFocus
           />
           {nameError && <span className="text-red-600 text-sm mb-2">{nameError}</span>}
           <span className="text-sm text-gray-500 mb-2">Your name will be saved with your score.</span>
