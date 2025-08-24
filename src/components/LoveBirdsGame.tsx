@@ -39,8 +39,8 @@ export default function LoveBirdsGame() {
   const LOGICAL_CANVAS_WIDTH = 600;
   const LOGICAL_CANVAS_HEIGHT = 400;
 
-  const GRAVITY = 0.4;
-  const FLAP_STRENGTH = -7;
+  const GRAVITY = 0.1;
+  const FLAP_STRENGTH = -3;
   const BIRD_SIZE = LOGICAL_CANVAS_HEIGHT * 0.05; // e.g., 20 for 400 height
   const HEART_SIZE = LOGICAL_CANVAS_HEIGHT * 0.0375; // e.g., 15 for 400 height
   const GAME_SPEED = 3;
