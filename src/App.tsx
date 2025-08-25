@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState, lazy, Suspense, useRef } from 'react';
 import { Heart, Calendar, Clock, MapPin, Send, Camera, Gift, Music, Cake, Glasses as Glass, ChevronLeft, ChevronRight } from 'lucide-react';
 import Cookies from 'js-cookie';
 import HeartBackground from './components/HeartBackground';
@@ -242,17 +242,87 @@ function App() {
     }
   };
 
+  // Tab navigation state
+  const sections = [
+    { label: "Home", ref: useRef<HTMLElement>(null) },
+    { label: "Venue", ref: useRef<HTMLElement>(null) },
+    { label: "Timeline", ref: useRef<HTMLElement>(null) },
+    { label: "FAQ", ref: useRef<HTMLElement>(null) },
+    { label: "RSVP", ref: useRef<HTMLElement>(null) },
+    { label: "Accommodation", ref: useRef<HTMLElement>(null) },
+  ];
+
+  const [navOpen, setNavOpen] = useState(false);
+
+  const handleTabClick = (idx: number) => {
+    const sectionRef = sections[idx].ref;
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    setNavOpen(false); // Close dropdown on mobile after click
+  };
+
   return (
     <div className={`min-h-screen bg-gradient-to-b from-gray-500 to-gray-1000 text-gray-800 ${isDisintegrating ? 'disintegrate' : ''}`}>
-      {showSecretMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 z-[9999] flex items-center justify-center p-4 animate-fade-in-fast">
-          <div className="text-red-500 text-center text-4xl md:text-6xl font-soul animate-pulse">
-            Impersonation is a serious crime. You have been reported.
+      {/* Tab Navigation - Responsive */}
+      <nav className="sticky top-0 z-50 bg-white bg-opacity-90 shadow-md border-b border-gray-200">
+        <div className="max-w-7xl mx-auto flex items-center justify-center py-2 px-4">
+          {/* Desktop Tabs */}
+          <ul className="hidden md:flex flex-wrap gap-2 md:gap-6">
+            {sections.map((section, idx) => (
+              <li key={section.label}>
+                <button
+                  className="px-3 py-2 rounded font-serif text-gray-700 hover:bg-red-100 hover:text-red-600 transition-colors duration-200 text-base md:text-lg"
+                  onClick={() => handleTabClick(idx)}
+                >
+                  {section.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+          {/* Mobile Dropdown */}
+          <div className="md:hidden w-full flex justify-center relative">
+            <button
+              className="px-4 py-2 rounded font-serif text-gray-700 bg-red-100 hover:bg-red-200 transition-colors duration-200 text-base flex items-center"
+              onClick={() => setNavOpen((open) => !open)}
+              aria-label="Open navigation"
+            >
+              {/* Hamburger Icon Only */}
+              <svg
+                className={`w-6 h-6 transition-transform duration-300 ${navOpen ? 'rotate-90' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <div
+              className={`absolute top-14 left-0 w-full z-50 transition-all duration-300 ${
+                navOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-95 pointer-events-none'
+              }`}
+              style={{ transformOrigin: 'top' }}
+            >
+              <ul className="bg-white shadow-lg border-t border-gray-200">
+                {sections.map((section, idx) => (
+                  <li key={section.label}>
+                    <button
+                      className="w-full text-left px-4 py-3 border-b border-gray-100 font-serif text-gray-700 hover:bg-red-100 hover:text-red-600 transition-colors duration-200 text-base"
+                      onClick={() => handleTabClick(idx)}
+                    >
+                      {section.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
-      )}
+      </nav>
 
-      <section className="h-[90vh] relative overflow-hidden">
+      {/* Home Section */}
+      <section ref={sections[0].ref} className="h-[90vh] relative overflow-hidden">
         <HeartBackground />
         <div
           className="absolute top-0 left-0 h-full flex"
@@ -285,7 +355,8 @@ function App() {
         </div>
       </section>
 
-      <section className="py-32 px-4 bg-gradient-radial from-gray-50 to-gray-100 relative">
+      {/* Our Story Section */}
+      <section /* ref removed from tab navigation */ className="py-32 px-4 bg-gradient-radial from-gray-50 to-gray-100 relative">
         <div className="max-w-4xl mx-auto text-center animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-8 text-shimmer pb-4">Our Story</h2>
           <div className="flex items-center justify-center mb-12">
@@ -341,7 +412,8 @@ was something special.
         </div>
       </section>
 
-      <section className="py-32 px-4 bg-gradient-radial from-gray-50 to-gray-100">
+      {/* Venue Section */}
+      <section ref={sections[1].ref} className="py-32 px-4 bg-gradient-radial from-gray-50 to-gray-100">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-12 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">The Venue</h2>
           <div className="flex items-center justify-center mb-8">
@@ -360,7 +432,8 @@ was something special.
         </div>
       </section>
 
-      <section className="py-32 px-4 bg-gray-100">
+      {/* Timeline Section */}
+      <section ref={sections[2].ref} className="py-32 px-4 bg-gray-100">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-16 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">The Big Day</h2>
           <div className="timeline-container py-12">
@@ -385,7 +458,8 @@ was something special.
         </div>
       </section>
 
-      <section className="pt-32 pb-16 px-4 bg-gradient-radial from-gray-50 to-gray-100">
+      {/* FAQ Section */}
+      <section ref={sections[3].ref} className="pt-32 pb-16 px-4 bg-gradient-radial from-gray-50 to-gray-100">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-16 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">Frequently Asked Questions</h2>
           <div className="grid gap-8">
@@ -428,7 +502,8 @@ was something special.
         </div>
       </section>
 
-      <section className="pt-16 pb-32 px-4 bg-gray-100">
+      {/* RSVP Section */}
+      <section ref={sections[4].ref} className="pt-16 pb-32 px-4 bg-gray-100">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-12 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">RSVP</h2>
           <div className="bg-white p-6 sm:p-10 md:p-12 rounded-lg shadow-lg animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] premium-border premium-shadow">
@@ -502,7 +577,7 @@ was something special.
       </section>
 
       {/* Accommodations Section */}
-      <section className="py-16 px-4 bg-white">
+      <section ref={sections[5].ref} className="py-16 px-4 bg-white">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-soul text-center mb-10 text-shimmer pb-2">Accommodations Nearby</h2>
           
