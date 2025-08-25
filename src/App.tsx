@@ -272,7 +272,7 @@ function App() {
             {sections.map((section, idx) => (
               <li key={section.label}>
                 <button
-                  className="px-3 py-2 rounded font-serif text-gray-700 hover:bg-red-100 hover:text-red-600 transition-colors duration-200 text-base md:text-lg"
+                  className="px-3 py-2 rounded font-soul text-gray-700 hover:bg-red-100 hover:text-red-600 transition-colors duration-200 text-base md:text-lg"
                   onClick={() => handleTabClick(idx)}
                 >
                   {section.label}
@@ -321,6 +321,15 @@ function App() {
         </div>
       </nav>
 
+      {/* Logo below navigation */}
+      <div className="w-full flex justify-center bg-white py-4 border-b border-gray-100">
+        <img
+          src="/img/robinkylelogo.jpg"
+          alt="Robin & Kyle Logo"
+          className="h-28 w-auto object-contain"
+        />
+      </div>
+
       {/* Home Section */}
       <section ref={sections[0].ref} className="h-[90vh] relative overflow-hidden">
         <HeartBackground />
@@ -356,7 +365,7 @@ function App() {
       </section>
 
       {/* Our Story Section */}
-      <section /* ref removed from tab navigation */ className="py-32 px-4 bg-gradient-radial from-gray-50 to-gray-100 relative">
+      <section className="py-20 px-4 bg-gradient-radial from-gray-50 to-gray-100 relative">
         <div className="max-w-4xl mx-auto text-center animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-8 text-shimmer pb-4">Our Story</h2>
           <div className="flex items-center justify-center mb-12">
@@ -413,7 +422,7 @@ was something special.
       </section>
 
       {/* Venue Section */}
-      <section ref={sections[1].ref} className="py-32 px-4 bg-gradient-radial from-gray-50 to-gray-100">
+      <section ref={sections[1].ref} className="py-20 px-4 bg-gradient-radial from-gray-50 to-gray-100">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-12 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">The Venue</h2>
           <div className="flex items-center justify-center mb-8">
@@ -442,7 +451,7 @@ was something special.
       </section>
 
       {/* Timeline Section */}
-      <section ref={sections[2].ref} className="py-32 px-4 bg-gray-100">
+      <section ref={sections[2].ref} className="py-16 px-4 bg-gray-100">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-16 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">The Big Day</h2>
           <div className="timeline-container py-12">
@@ -468,7 +477,7 @@ was something special.
       </section>
 
       {/* FAQ Section */}
-      <section ref={sections[3].ref} className="pt-32 pb-16 px-4 bg-gradient-radial from-gray-50 to-gray-100">
+      <section ref={sections[3].ref} className="pt-16 pb-12 px-4 bg-gradient-radial from-gray-50 to-gray-100">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-16 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">Frequently Asked Questions</h2>
           <div className="grid gap-8">
@@ -512,7 +521,7 @@ was something special.
       </section>
 
       {/* RSVP Section */}
-      <section ref={sections[4].ref} className="pt-16 pb-32 px-4 bg-gray-100">
+      <section ref={sections[4].ref} className="pt-12 pb-20 px-4 bg-gray-100">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-12 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">RSVP</h2>
           <div className="bg-white p-6 sm:p-10 md:p-12 rounded-lg shadow-lg animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] premium-border premium-shadow">
@@ -586,7 +595,7 @@ was something special.
       </section>
 
       {/* Accommodations Section */}
-      <section ref={sections[5].ref} className="py-16 px-4 bg-white">
+      <section ref={sections[5].ref} className="py-12 px-4 bg-white">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-soul text-center mb-10 text-shimmer pb-2">Accommodations Nearby</h2>
           
@@ -744,7 +753,7 @@ was something special.
       </section>
 
       {/* Countdown Section */}
-      <section className="py-16 px-4 bg-gradient-radial from-gray-50 to-gray-100">
+      <section className="py-12 px-4 bg-gradient-radial from-gray-50 to-gray-100">
         
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-8 text-shimmer pb-4">Countdown to the Big Day</h2>
@@ -757,7 +766,7 @@ was something special.
       </section>
 
       {/* Love Birds Game Section */}
-      <section className="py-32 px-4 bg-gradient-radial from-gray-50 to-gray-100">
+      <section className="py-20 px-4 bg-gradient-radial from-gray-50 to-gray-100">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-8 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">Love Birds Game</h2>
           <Suspense fallback={<div className="h-64" />}>
@@ -769,7 +778,7 @@ was something special.
         </div>
       </section>
 
-      <footer className="relative bg-black text-white py-24 text-center overflow-hidden">
+      <footer className="relative bg-black text-white py-16 text-center overflow-hidden">
         <Suspense fallback={null}>
           <Starfield />
         </Suspense>
