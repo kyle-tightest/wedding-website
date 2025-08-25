@@ -364,7 +364,7 @@ function App() {
           </div>
           {/* Story Paragraph with background for readability */}
           <div className="bg-white bg-opacity-75 p-6 md:p-8 rounded-lg shadow-xl premium-border mb-12">
-            <p className="text-gray-700 leading-relaxed text-lg tracking-wide">
+            <p className="text-gray-700 leading-relaxed text-lg tracking-wide font-soul">
               Despite knowing of each other for years—through mutuals, social
 media, and even brief encounters at a 21st birthday and his
 grandmother’s funeral—it turns out we needed a little help from
@@ -419,8 +419,17 @@ was something special.
           <div className="flex items-center justify-center mb-8">
             <MapPin className="w-8 h-8 text-red-500 animate-bounce-slow" />
           </div>
-          <h3 className="text-3xl font-serif mb-4 animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]">Zorgvliet Wine Estate</h3>
-          <p className="text-gray-600 mb-12 animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] tracking-wider">Helshoogte Rd, Stellenbosch Central, Stellenbosch, 7600</p>
+          <h3 className="text-3xl font-soul mb-4 animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]">Zorgvliet Wine Estate</h3>
+            
+            <a
+            href="https://maps.app.goo.gl/9f6cKABHkqjNdZvi9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xl text-gray-600 mb-12 font-soul animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] tracking-wider underline hover:text-red-600 transition-colors"
+            >
+            Get Directions
+            </a>
+            <div className="mb-8" />
           <div className="relative group card-premium">
             <img 
               src="https://zorgvliet.com/wp-content/uploads/2015/07/Zorgvliet-accommodation-location.jpg?auto=format&fit=crop&q=80&w=1920" 
