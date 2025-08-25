@@ -281,11 +281,6 @@ function App() {
             <h1 className="text-6xl md:text-7xl lg:text-9xl font-soul mb-6 text-shadow">Robin & Kyle</h1>
             <p className="text-xl md:text-2xl font-soul animate-slide-up tracking-widest">Request the pleasure of your company</p>
             <p className="text-xl md:text-2xl font-soul animate-slide-up tracking-widest">at our wedding</p>
-            <div className="mt-12 flex items-center justify-center space-x-2 animate-bounce-slow bg-glass py-4 px-8 rounded-full inline-block premium-border">
-              <Calendar className="w-6 h-6 text-red-500" />
-              <p className="text-lg md:text-xl tracking-wider">February 7, 2026</p>
-            </div>
-            <Countdown weddingDate={weddingDate} />
           </div>
         </div>
       </section>
@@ -664,6 +659,20 @@ was something special.
         </div>
       </section>
 
+      {/* Countdown Section */}
+      <section className="py-16 px-4 bg-gradient-radial from-gray-50 to-gray-100">
+        
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-8 text-shimmer pb-4">Countdown to the Big Day</h2>
+          <div className="mt-12 flex items-center justify-center space-x-2 animate-bounce-slow bg-glass py-4 px-8 rounded-full inline-block premium-border">
+              <Calendar className="w-6 h-6 text-red-500" />
+              <p className="text-lg md:text-xl tracking-wider">February 7, 2026</p>
+            </div>
+          <Countdown weddingDate={weddingDate} />
+        </div>
+      </section>
+
+      {/* Love Birds Game Section */}
       <section className="py-32 px-4 bg-gradient-radial from-gray-50 to-gray-100">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-8 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">Love Birds Game</h2>
