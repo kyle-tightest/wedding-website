@@ -607,57 +607,49 @@ was something special.
                 name: "Staymore",
                 url: "https://www.staymoreguesthouse.co.za/",
                 price: "From R2100 per night",
-                img: "",
-                distance: "1.6 km"
+                distance: "1.6 km from venue"
               },
               {
                 name: "Just Joey Lodge",
                 url: "https://www.booking.com/Share-EUt077",
                 price: "From R2400 per night",
-                img: "",
-                distance: "9.5 km"
+                distance: "9.5 km from venue"
               },
               {
                 name: "Lemon Rind - 16 Eikehoff",
                 url: "https://www.booking.com/Share-7qKGII3",
                 price: "From R3400 for two nights (must book 2 nights)",
-                img: "",
-                distance: "9.2 km"
+                distance: "9.2 km from venue"
               },
               {
                 name: "Eendracht Apartments",
                 url: "https://www.booking.com/Share-7NBqPR",
                 price: "From R1100 per night",
-                img: "",
-                distance: "8.9 km"
+                distance: "8.9 km from venue"
               },
               {
                 name: "Orange-Ville Lodge & Guesthouse",
                 url: "https://www.booking.com/Share-wofumjI",
                 price: "From R3840 for 2 nights (must book 2 nights)",
-                img: "",
                 distance: "1.5 km"
               },
               {
                 name: "33 Longifolia",
                 url: "https://www.lekkeslaap.co.za/accommodation/33-longifolia",
                 price: "From R1125 per night",
-                img: "",
-                distance: "14.5 km"
+                distance: "14.5 km from venue"
               },
               {
                 name: "4 Piet Retief",
                 url: "https://www.lekkeslaap.co.za/accommodation/4-piet-retief/rooms",
                 price: "From R2400 for 2 nights (must book 2 nights)",
-                img: "",
-                distance: "10.3 km"
+                distance: "10.3 km from venue"
               },
               {
                 name: "Kockies @ die Boord",
                 url: "https://www.lekkeslaap.co.za/accommodation/kockies--die-boord/rooms",
                 price: "From R1200 per night",
-                img: "",
-                distance: "11.8 km"
+                distance: "11.8 km from venue"
               }
             ].map((hotel, idx) => (
               <a
@@ -667,11 +659,6 @@ was something special.
                 rel="noopener noreferrer"
                 className="block bg-gray-50 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-200 hover:border-red-400"
               >
-                <img
-                  src={hotel.img}
-                  alt={hotel.name}
-                  className="w-full h-48 object-cover"
-                />
                 <div className="p-6">
                   <h3 className="text-xl font-serif mb-2 text-red-600">{hotel.name}</h3>
                   <p className="text-gray-700 mb-2">{hotel.price}</p>
@@ -690,8 +677,7 @@ was something special.
                 name: "No 3 at The Barracks",
                 url: "https://www.booking.com/Share-PylISm",
                 price: "From R2070 for 3 people (one large bed)",
-                img: "",
-                distance: "1.2 km",
+                distance: "1.2 km from venue",
               }
             ].map((hotel, idx) => (
               <a
@@ -701,11 +687,6 @@ was something special.
                 rel="noopener noreferrer"
                 className="block bg-gray-50 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-200 hover:border-red-400"
               >
-                <img
-                  src={hotel.img}
-                  alt={hotel.name}
-                  className="w-full h-48 object-cover"
-                />
                 <div className="p-6">
                   <h3 className="text-xl font-serif mb-2 text-red-600">{hotel.name}</h3>
                   <p className="text-gray-700 mb-2">{hotel.price}</p>
@@ -724,8 +705,7 @@ was something special.
                 name: "Kockies @ die Boord",
                 url: "https://www.lekkeslaap.co.za/accommodation/kockies--die-boord/rooms",
                 price: "From R2400 for 2 rooms per night",
-                img: "",
-                distance: "11.8 km"
+                distance: "11.8 km from venue"
               }
             ].map((hotel, idx) => (
               <a
@@ -735,11 +715,6 @@ was something special.
                 rel="noopener noreferrer"
                 className="block bg-gray-50 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-200 hover:border-red-400"
               >
-                <img
-                  src={hotel.img}
-                  alt={hotel.name}
-                  className="w-full h-48 object-cover"
-                />
                 <div className="p-6">
                   <h3 className="text-xl font-serif mb-2 text-red-600">{hotel.name}</h3>
                   <p className="text-gray-700 mb-2">{hotel.price}</p>
