@@ -26,6 +26,7 @@ function App() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [meal, setMeal] = useState('');
+  const [song, setSong] = useState(''); // New state for song choice
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isDisintegrating, setIsDisintegrating] = useState(false);
@@ -223,7 +224,7 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, meal }),
+        body: JSON.stringify({ name, email, meal, song }), // Include song in the request
       });
 
       const data = await response.json();
@@ -578,6 +579,17 @@ was something special.
                     <option value="vegetarian">Hadeda</option>
                     <option value="vegan">Brocolli 5-ways</option>
                   </select>
+                </div>
+                <div>
+                  <label className="block text-gray-700 mb-2 font-serif tracking-wide">Song Choice</label>
+                  <input
+                    type="text"
+                    name="song"
+                    value={song}
+                    onChange={(e) => setSong(e.target.value)}
+                    className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transform transition-transform duration-200 hover:scale-[1.01] premium-border input-premium text-gray-700"
+                    placeholder="Suggest a song for the dance floor!"
+                  />
                 </div>
                 <button
                   type="submit"

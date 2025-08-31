@@ -22,7 +22,7 @@ export default async function handler(
     return response.status(405).json({ message: 'Method Not Allowed' });
   }
 
-  const { name, email, meal } = request.body;
+  const { name, email, meal, song } = request.body;
 
   if (!name || !email || !meal) {
     return response.status(400).json({ message: 'Missing required fields.' });
@@ -34,13 +34,13 @@ export default async function handler(
     const guestResult = await pool.query(guestListQuery, [name.trim()]);
 
     if (guestResult.rowCount === 0) {
-      console.log("Someone is attempting to RSVP but they're not on the guest list.", name, email, meal);
+      console.log("Someone is attempting to RSVP but they're not on the guest list.", name, email, meal, song);
       // Save unauthorized RSVP attempt
       const ip = request.headers['x-forwarded-for'] || request.socket.remoteAddress || null;
       try {
         await pool.query(
-          `INSERT INTO unauthorized_rsvp_attempts (name, email, meal, ip_address) VALUES ($1, $2, $3, $4);`,
-          [name, email, meal, Array.isArray(ip) ? ip[0] : ip]
+          `INSERT INTO unauthorized_rsvp_attempts (name, email, meal, ip_address, song) VALUES ($1, $2, $3, $4, $5);`,
+          [name, email, meal, Array.isArray(ip) ? ip[0] : ip, song ?? null]
         );
       } catch (err) {
         console.error('Failed to log unauthorized RSVP attempt:', err);
@@ -52,10 +52,10 @@ export default async function handler(
     // This query inserts a new RSVP. If an RSVP with the same email already exists,
     // it updates the existing record. This is useful if a guest changes their mind.
     const query = `
-      INSERT INTO rsvps (name, email, meal_preference) VALUES ($1, $2, $3)
-      ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, meal_preference = EXCLUDED.meal_preference, submitted_at = CURRENT_TIMESTAMP;
+      INSERT INTO rsvps (name, email, meal_preference, song) VALUES ($1, $2, $3, $4)
+      ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, meal_preference = EXCLUDED.meal_preference, song = EXCLUDED.song, submitted_at = CURRENT_TIMESTAMP;
     `;
-    await pool.query(query, [name, email, meal]);
+    await pool.query(query, [name, email, meal, song ?? null]);
 
     // Send confirmation email. We wrap this in its own try/catch
     // so that if email sending fails, the API doesn't return an error.
@@ -86,6 +86,7 @@ export default async function handler(
               <li style="margin-bottom: 8px;"><strong>Name:</strong> ${name}</li>
               <li style="margin-bottom: 8px;"><strong>Email:</strong> ${email}</li>
               <li style="margin-bottom: 8px;"><strong>Meal Preference:</strong> ${meal}</li>
+              ${song ? `<li style="margin-bottom: 8px;"><strong>Song Choice:</strong> ${song}</li>` : ""}
             </ul>
             <p>We can't wait to see you on <strong>February 7, 2026</strong>.</p>
             <p>If you need to change your details, you can do so by visiting our website again.</p>
