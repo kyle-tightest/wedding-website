@@ -453,26 +453,53 @@ was something special.
 
       {/* Timeline Section */}
       <section ref={sections[2].ref} className="py-16 px-4 bg-gray-100">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-16 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">The Big Day</h2>
-          <div className="timeline-container py-12">
-            <div className="grid md:grid-cols-2 gap-12 ">
-              {[
-                { icon: Clock, title: "Ceremony", time: "4:00 PM - 5:00 PM", desc: "Join us as we exchange vows" },
-                { icon: Camera, title: "Photos", time: "5:00 PM - 6:00 PM", desc: "Capture memories with us" },
-                { icon: Glass, title: "Cocktail Hour", time: "5:00 PM - 6:00 PM", desc: "Enjoy drinks & hors d'oeuvres" },
-                { icon: Music, title: "Reception", time: "6:00 PM - 12:00 PM", desc: "Dance the night away" }
-              ].map((event, index) => (
-                <div key={index} className={`timeline-item ${index % 2 === 0 ? 'text-right pr-12' : 'pl-12'} animate-on-scroll opacity-0 translate-y-8 duration-1000`} style={{ transitionDelay: `${index * 200}ms` }}>
-                  <div className="bg-white p-6 md:p-8 shadow-lg rounded-lg hover-trigger transform hover:scale-105 transition-all duration-300 premium-border premium-shadow card-premium animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]" style={{ transitionDelay: `${index * 200}ms` }}>
-                    <event.icon className="w-8 h-8 text-red-500 mx-auto mb-4" />
-                    <h3 className="text-2xl font-serif mb-2">{event.title}</h3>
-                    <p>{event.time}</p>
-                    <p className="text-sm text-gray-500 mt-2 hover-target">{event.desc}</p>
-                  </div>
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-10 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">The Big Day</h2>
+          <div className="flex flex-col gap-8">
+            {[
+              {
+                icon: <Clock className="w-10 h-10 text-red-500 drop-shadow-lg animate-spin-slow" />,
+                title: "Ceremony",
+                time: "4:00 PM - 5:00 PM",
+                desc: "Join us as we exchange vows"
+              },
+              {
+                icon: <Camera className="w-10 h-10 text-pink-500 drop-shadow-lg animate-bounce-slow" />,
+                title: "Photos",
+                time: "5:00 PM - 6:00 PM",
+                desc: "Capture memories with us"
+              },
+              {
+                icon: <Glass className="w-10 h-10 text-yellow-500 drop-shadow-lg animate-wiggle" />,
+                title: "Cocktail Hour",
+                time: "5:00 PM - 6:00 PM",
+                desc: "Enjoy drinks & hors d'oeuvres"
+              },
+              {
+                icon: <Music className="w-10 h-10 text-purple-500 drop-shadow-lg animate-pulse" />,
+                title: "Reception",
+                time: "6:00 PM - 12:00 PM",
+                desc: "Dance the night away"
+              }
+            ].map((event, idx) => (
+              <div
+                key={idx}
+                className={`bg-white rounded-xl shadow-xl p-8 flex flex-col sm:flex-row items-center gap-6 premium-border premium-shadow animate-fade-in-up`}
+                style={{
+                  animationDelay: `${idx * 200}ms`,
+                  animationDuration: '1200ms'
+                }}
+              >
+                <div className="flex-shrink-0 flex items-center justify-center">
+                  {event.icon}
                 </div>
-              ))}
-            </div>
+                <div className="flex-1 text-center sm:text-left">
+                  <h3 className="text-2xl font-soul mb-2 text-red-600 tracking-wide animate-text-pop">{event.title}</h3>
+                  <p className="font-soul text-lg mb-1 text-gray-700 animate-fade-in">{event.time}</p>
+                  <p className="text-gray-600 font-soul text-base animate-fade-in">{event.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
