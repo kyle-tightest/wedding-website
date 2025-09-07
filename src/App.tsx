@@ -11,6 +11,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 const Starfield = lazy(() => import('./components/Starfield'));
 const LoveBirdsGame = lazy(() => import('./components/LoveBirdsGame'));
 const MusicPlayer = lazy(() => import('./components/MusicPlayer'));
+const WeddingParty = lazy(() => import('./components/WeddingParty'));
 
 function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -251,6 +252,7 @@ function App() {
     { label: "FAQ", ref: useRef<HTMLElement>(null) },
     { label: "RSVP", ref: useRef<HTMLElement>(null) },
     { label: "Accommodation", ref: useRef<HTMLElement>(null) },
+    { label: "Wedding Party", ref: useRef<HTMLElement>(null) },
   ];
 
   const [navOpen, setNavOpen] = useState(false);
@@ -762,6 +764,81 @@ was something special.
                 </div>
               </a>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Wedding Party Section */}
+      <section ref={sections[6].ref} className="py-16 px-4 bg-gradient-radial from-gray-50 to-gray-100">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-10 text-shimmer pb-4">Wedding Party</h2>
+          {/* Bridesmaids */}
+          <div>
+            <h3 className="text-2xl font-soul mb-6 text-pink-600">Bridesmaids</h3>
+            <div className="grid grid-cols-2 gap-6 mb-12">
+                {[
+                {
+                  name: "Jeandré Henney",
+                  img: "/img/jeandre.jpg"
+                },
+                {
+                  name: "Nadine Vernon-Driscoll",
+                  img: "/img/nadine.jpg"
+                }
+                ].map((bm, idx) => (
+                <div
+                  key={bm.name}
+                  className={`flex flex-col items-center animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]`}
+                  style={{
+                  animationDelay: `${idx * 200}ms`,
+                  animationDuration: '1200ms'
+                  }}
+                >
+                  <img
+                  src={bm.img}
+                  alt={bm.name}
+                  className="w-32 h-32 object-cover rounded-full shadow-lg border-4 border-pink-200 mb-3 transition-transform duration-500 group-hover:scale-110 hover:rotate-[6deg] hover:shadow-2xl"
+                  />
+                  <span className="font-serif text-lg text-gray-700 animate-text-pop">{bm.name}</span>
+                </div>
+                ))}
+            </div>
+          </div>
+          {/* Groomsmen */}
+          <div>
+            <h3 className="text-2xl font-soul mb-6 text-blue-600">Groomsmen</h3>
+            <div className="flex flex-row justify-center gap-6">
+                {[
+                {
+                  name: "Mario Wessels",
+                  img: "/img/mario.png"
+                },
+                {
+                  name: "Brent Lechet",
+                  img: "/img/brent3.jpeg"
+                },
+                {
+                  name: "Luke Kramer",
+                  img: "/img/luke.jpeg"
+                }
+                ].map((gm, idx) => (
+                <div
+                  key={gm.name}
+                  className={`flex flex-col items-center animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]`}
+                  style={{
+                  animationDelay: `${idx * 200}ms`,
+                  animationDuration: '1200ms'
+                  }}
+                >
+                  <img
+                  src={gm.img}
+                  alt={gm.name}
+                  className="w-32 h-32 object-cover rounded-full shadow-lg border-4 border-blue-200 mb-3 transition-transform duration-500 group-hover:scale-110 hover:rotate-[-6deg] hover:shadow-2xl"
+                  />
+                  <span className="font-serif text-lg text-gray-700 animate-text-pop">{gm.name}</span>
+                </div>
+                ))}
+            </div>
           </div>
         </div>
       </section>
