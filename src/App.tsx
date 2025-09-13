@@ -471,26 +471,20 @@ was something special.
               {
                 icon: <Clock className="w-10 h-10 text-red-500 drop-shadow-lg animate-spin-slow" />,
                 title: "Ceremony",
-                time: "3:30 PM - 4:30 PM",
+                time: "15:30 PM - 16:15 PM",
                 desc: "Chapel"
-              },
-              {
-                icon: <Camera className="w-10 h-10 text-pink-500 drop-shadow-lg animate-bounce-slow" />,
-                title: "Photos",
-                time: "5:00 PM - 6:00 PM",
-                desc: "Capture memories with us"
               },
               {
                 icon: <Glass className="w-10 h-10 text-yellow-500 drop-shadow-lg animate-wiggle" />,
                 title: "Cocktail Hour",
-                time: "5:00 PM - 6:00 PM",
-                desc: "Enjoy drinks & hors d'oeuvres"
+                time: "16:30 PM - 18:15 PM",
+                desc: "Enjoy drinks & canapés"
               },
               {
                 icon: <Music className="w-10 h-10 text-purple-500 drop-shadow-lg animate-pulse" />,
                 title: "Reception",
-                time: "6:00 PM - 12:00 PM",
-                desc: "Dance the night away"
+                time: "18:15 PM - 00:00 AM",
+                desc: "Dinner, dancing & celebrations"
               }
             ].map((event, idx) => (
               <div
