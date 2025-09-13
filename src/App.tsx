@@ -265,6 +265,9 @@ function App() {
     setNavOpen(false); // Close dropdown on mobile after click
   };
 
+  // Add state for toggling the venue image/sitemap
+  const [showVenueSitemap, setShowVenueSitemap] = useState(false);
+
   return (
     <div className={`min-h-screen bg-gradient-to-b from-gray-500 to-gray-1000 text-gray-800 ${isDisintegrating ? 'disintegrate' : ''}`}>
       {/* Tab Navigation - Responsive */}
@@ -444,11 +447,17 @@ was something special.
             <div className="mb-8" />
           <div className="relative group card-premium">
             <img 
-              src="https://zorgvliet.com/wp-content/uploads/2015/07/Zorgvliet-accommodation-location.jpg?auto=format&fit=crop&q=80&w=1920" 
-              alt="Venue" 
-              className="w-full h-96 object-cover rounded-lg shadow-lg transform group-hover:scale-[1.02] transition-transform duration-500 animate-on-scroll opacity-0 translate-y-8 duration-1000 premium-border"
+              src={showVenueSitemap ? "/img/sitemap.png" : "https://zorgvliet.com/wp-content/uploads/2015/07/Zorgvliet-accommodation-location.jpg?auto=format&fit=crop&q=80&w=1920"} 
+              alt={showVenueSitemap ? "Venue Sitemap" : "Venue"} 
+              className="object-contain w-full max-h-[36rem] object-cover rounded-lg shadow-lg transform group-hover:scale-[1.02] transition-transform duration-500 animate-on-scroll opacity-0 translate-y-8 duration-1000 premium-border cursor-pointer"
+              onClick={() => setShowVenueSitemap((prev) => !prev)}
+              style={{ border: showVenueSitemap ? '3px solid #e11d48' : undefined }}
             />
-            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 rounded-lg"></div>
+            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 rounded-lg pointer-events-none"></div>
+            <span className="absolute top-4 left-1/2 -translate-x-1/2 bg-white bg-opacity-80 text-gray-700 px-3 py-1 rounded shadow text-xs font-soul pointer-events-none select-none"
+              style={{ transform: 'translate(-50%, 0)' }}>
+              {showVenueSitemap ? "Click to show venue photo" : "Click to show sitemap"}
+            </span>
           </div>
         </div>
       </section>
@@ -462,8 +471,8 @@ was something special.
               {
                 icon: <Clock className="w-10 h-10 text-red-500 drop-shadow-lg animate-spin-slow" />,
                 title: "Ceremony",
-                time: "4:00 PM - 5:00 PM",
-                desc: "Join us as we exchange vows"
+                time: "3:30 PM - 4:30 PM",
+                desc: "Chapel"
               },
               {
                 icon: <Camera className="w-10 h-10 text-pink-500 drop-shadow-lg animate-bounce-slow" />,
