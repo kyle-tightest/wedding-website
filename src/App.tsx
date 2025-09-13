@@ -6,6 +6,7 @@ import Countdown from './components/Countdown';
 import PasswordModal from './components/PasswordModal';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Link } from "react-router-dom"; // If using react-router
 
 // Lazy load non-critical components to improve initial page load time.
 const Starfield = lazy(() => import('./components/Starfield'));
@@ -517,23 +518,23 @@ was something special.
             {[
               {
                 q: "What is the dress code?",
-                a: "TBD"
+                a: "Dress to impress - Formal attire requested. Think black tie elegance. Check out our look book for inspiration."
               },
               {
                 q: "Can I bring a plus one?",
-                a: "TBD"
+                a: "We've carefully selected our guests to make this day special. Unfortunately, plus ones aren't allowed unless explicitly invited.",
               },
               {
                 q: "Is there parking at the venue?",
-                a: "TBD"
+                a: "Yes, ample parking is available on-site for all guests."
               },
               {
                 q: "Are there accommodations nearby?",
-                a: "TBD"
+                a: "Yes, we've listed some options in the Accommodation section below."
               },
               {
                 q: "What time should I arrive?",
-                a: "Please plan to arrive 15-30 minutes before the ceremony start time of 4:00 PM to allow time for seating."
+                a: "Please take your seats between 15:00 and 15:15 for a prompt 15:30 ceremony start."
               },
               {
                 q: "How do I RSVP?",
@@ -637,7 +638,7 @@ was something special.
       </section>
 
       {/* Accommodations Section */}
-      <section ref={sections[5].ref} className="py-12 px-4 bg-white">
+      <section ref={sections[5].ref} className="py-12 px-4 bg-gray-100">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-soul text-center mb-10 text-shimmer pb-2">Accommodations Nearby</h2>
           
@@ -766,6 +767,22 @@ was something special.
               </a>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Look Book Section */}
+      <section className="py-10 px-4 bg-gray-100">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-soul mb-4 text-shimmer">Look Book</h2>
+          <p className="text-gray-700 mb-6">
+            Need inspiration for what to wear? Check out our style guide for the big day!
+          </p>
+          <Link
+            to="/lookbook"
+            className="inline-block px-6 py-3 bg-red-500 text-white rounded-lg font-soul text-lg shadow hover:bg-red-600 transition-colors"
+          >
+            View Look Book
+          </Link>
         </div>
       </section>
 
