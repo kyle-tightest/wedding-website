@@ -1,5 +1,5 @@
 import React, { useEffect, useState, lazy, Suspense, useRef } from 'react';
-import { Heart, Calendar, Clock, MapPin, Send, Camera, Gift, Music, Cake, Glasses as Glass, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, Calendar, Clock, MapPin, Send, Camera, Gift, Music, Cake, Glasses as Glass, ChevronLeft, ChevronRight, GlassWater } from 'lucide-react';
 import Cookies from 'js-cookie';
 import Countdown from './components/Countdown';
 import PasswordModal from './components/PasswordModal';
@@ -253,7 +253,7 @@ function App() {
     { label: "FAQ", ref: useRef<HTMLElement>(null) },
     { label: "RSVP", ref: useRef<HTMLElement>(null) },
     { label: "Accommodation", ref: useRef<HTMLElement>(null) },
-    { label: "Wedding Party", ref: useRef<HTMLElement>(null) },
+    { label: "Look Book", ref: useRef<HTMLElement>(null) },
   ];
 
   const [navOpen, setNavOpen] = useState(false);
@@ -484,17 +484,20 @@ was something special.
       {/* Timeline Section */}
       <section ref={sections[2].ref} className="py-16 px-4 bg-gray-100">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-10 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">The Big Day</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-5 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">The Big Day</h2>
+          <p className="text-center text-xl text-gray-700 mb-10 font-baskerville">
+            Saturday, 7 February 2026 | Zorgvliet Wine Estate | Black Tie
+          </p>
           <div className="flex flex-col gap-8">
             {[
               {
                 icon: <Clock className="w-10 h-10 text-red-500 drop-shadow-lg animate-spin-slow" />,
                 title: "Ceremony",
                 time: "15:30 PM - 16:15 PM",
-                desc: "Chapel"
+                desc: "We walk down the aisle and exchange vows"
               },
               {
-                icon: <Glass className="w-10 h-10 text-yellow-500 drop-shadow-lg animate-wiggle" />,
+                icon: <GlassWater className="w-10 h-10 text-yellow-500 drop-shadow-lg animate-wiggle" />,
                 title: "Cocktail Hour",
                 time: "16:30 PM - 18:15 PM",
                 desc: "Enjoy drinks & canapés"
@@ -536,7 +539,7 @@ was something special.
             {[
               {
                 q: "What is the dress code?",
-                a: "We'd love everyone to join us in an all-black theme for the wedding. Think black in any style, from sleek to playful. A white shirt is permitted."
+                a: "We'd love everyone to join us in an all-black theme for the wedding. Think black in any style, from sleek to playful. A white shirt is permitted. Look for outfit inspiration in the Lookbook section."
               },
               {
                 q: "Can I bring a plus one?",
@@ -569,9 +572,9 @@ was something special.
       </section>
 
       {/* RSVP Section */}
-      <section ref={sections[4].ref} className="pt-12 pb-20 px-4 bg-gray-100">
+      <section ref={sections[4].ref} className="pt-16 pb-20 px-4 bg-gray-100">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-6 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">RSVP</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-6 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-1">RSVP</h2>
           <p className="text-center text-lg text-gray-700 mb-10 font-soul">Each guest must RSVP individually</p>
           <div className="bg-white p-6 sm:p-10 md:p-12 rounded-lg shadow-lg animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] premium-border premium-shadow">
             {hasRsvped && !allowChange ? (
@@ -627,7 +630,7 @@ was something special.
                   </select>
                 </div>
                 <div>
-                  <label className="block text-gray-700 mb-2 font-serif tracking-wide">Song Choice</label>
+                  <label className="block text-gray-700 mb-2 font-serif tracking-wide">Song Choice (Optional)</label>
                   <input
                     type="text"
                     name="song"
@@ -653,7 +656,7 @@ was something special.
       </section>
 
       {/* Accommodations Section */}
-      <section ref={sections[5].ref} className="py-12 px-4 bg-gray-100">
+      <section ref={sections[5].ref} className="py-16 px-4 bg-gray-100">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-soul text-center mb-10 text-shimmer pb-2">Accommodations Nearby</h2>
           
@@ -817,9 +820,9 @@ was something special.
       </section>
 
       {/* Look Book Section */}
-      <section className="py-10 px-4 bg-gray-100">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-soul mb-4 text-shimmer">Look Book</h2>
+      <section ref={sections[6].ref} className="py-10 px-4 bg-gray-100">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl sm:text-4xl md:text-5xl font-soul text-center mb-5 text-shimmer pb-2">Look Book</h2>
           <p className="text-gray-700 mb-6">
             Need inspiration for what to wear? Check out our style guide for the big day!
           </p>
@@ -833,7 +836,7 @@ was something special.
       </section>
 
       {/* Wedding Party Section */}
-      <section ref={sections[6].ref} className="py-16 px-4 bg-gradient-radial from-gray-50 to-gray-100">
+      <section className="py-16 px-4 bg-gradient-radial from-gray-50 to-gray-100">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-10 text-shimmer pb-4">Wedding Party</h2>
           {/* Bridesmaids */}
