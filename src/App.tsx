@@ -882,7 +882,7 @@ was something special.
                 },
                 {
                   name: "Brent Lechet",
-                  img: "/img/brent3.jpeg"
+                  img: "/img/brent4.jpg"
                 },
                 {
                   name: "Luke Kramer",
