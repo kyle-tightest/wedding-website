@@ -49,12 +49,12 @@ function App() {
     "/img/story-2.jpg",
     "/img/story-3.jpg",
     "/img/story-4.jpg",
-    "/img/story-5.jpg", // Added new image
-    "/img/story-6.jpg", // Added new image
-    "/img/story-7.jpg", // Added new image
-    "/img/story-8.jpg", // Added new image
-    "/img/story-9.jpg", // Added new image
-    "/img/story-10.jpg", // Added new image
+    "/img/story-5.jpg",
+    "/img/story-6.jpg",
+    "/img/story-7.jpg",
+    "/img/story-8.jpg",
+    "/img/story-9.jpg",
+    "/img/story-10.jpg",
   ];
 
   useEffect(() => {
@@ -547,16 +547,12 @@ was something special.
                 a: "Yes, ample parking is available on-site for all guests."
               },
               {
-                q: "Are there accommodations nearby?",
-                a: "Yes, we've listed some options in the Accommodation section below."
-              },
-              {
                 q: "What time should I arrive?",
                 a: "Please take your seats between 15:00 and 15:15 for a prompt 15:30 ceremony start."
               },
               {
-                q: "How do I RSVP?",
-                a: "Please scroll down 😊"
+                q: "Gifting",
+                a: "Gifts are welcome but not expected. Registry to be added soon."
               }
             ].map((faq, index) => (
               <div 
@@ -575,7 +571,8 @@ was something special.
       {/* RSVP Section */}
       <section ref={sections[4].ref} className="pt-12 pb-20 px-4 bg-gray-100">
         <div className="max-w-2xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-12 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">RSVP</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul text-center mb-6 text-shimmer animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] pb-4">RSVP</h2>
+          <p className="text-center text-lg text-gray-700 mb-10 font-soul">Each guest must RSVP individually</p>
           <div className="bg-white p-6 sm:p-10 md:p-12 rounded-lg shadow-lg animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] premium-border premium-shadow">
             {hasRsvped && !allowChange ? (
               <div className="text-center">
@@ -624,9 +621,9 @@ was something special.
                     required
                   >
                     <option value="">Please select a meal option</option>
-                    <option value="beef">Beef Fillet</option>
-                    <option value="chicken">Fresh Linefish</option>
-                    <option value="vegetarian">Mushroom Risotto (Vegetarian)</option>
+                    <option value="Beef Fillet">Beef Fillet</option>
+                    <option value="Fresh Linefish">Fresh Linefish</option>
+                    <option value="Mushroom Risotto (Vegetarian)">Mushroom Risotto (Vegetarian)</option>
                   </select>
                 </div>
                 <div>
