@@ -605,11 +605,9 @@ was something special.
                     required
                   >
                     <option value="">Please select a meal option</option>
-                    <option value="beef">Afval Pudding</option>
-                    <option value="chicken">Banana Mince</option>
-                    <option value="fish">12 year matured steak (off)</option>
-                    <option value="vegetarian">Hadeda</option>
-                    <option value="vegan">Brocolli 5-ways</option>
+                    <option value="beef">Beef Fillet</option>
+                    <option value="chicken">Fresh Linefish</option>
+                    <option value="vegetarian">Mushroom Risotto (Vegetarian)</option>
                   </select>
                 </div>
                 <div>
