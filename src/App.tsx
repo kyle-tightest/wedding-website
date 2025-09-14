@@ -7,6 +7,7 @@ import PasswordModal from './components/PasswordModal';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Link } from "react-router-dom"; // If using react-router
+import { distance } from 'three/examples/jsm/nodes/Nodes.js';
 
 // Lazy load non-critical components to improve initial page load time.
 const Starfield = lazy(() => import('./components/Starfield'));
@@ -659,10 +660,10 @@ was something special.
                 distance: "9.5 km from venue"
               },
               {
-                name: "Lemon Rind - 16 Eikehoff",
-                url: "https://www.booking.com/Share-7qKGII3",
-                price: "From R3400 for two nights (must book 2 nights)",
-                distance: "9.2 km from venue"
+                name: "Skyview Manor",
+                url: "https://www.booking.com/hotel/za/skyview-manor.html?ssne=Stellenbosch&ssne_untouched=Stellenbosch&highlighted_hotels=1643790&ss=Stellenbosch&dest_id=1643790&dest_type=hotel&hp_avform=1&origin=hp&do_availability_check=1&label=orange-ville-guesthouse-sHomYwpT0_0d5A4aKpmweQS253746015346%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-36148878703%3Alp9219128%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YTQUGSsRwx9_3qo3uPTHyoo&sid=336cfc7c2a5c7574edff7404b4efa774&aid=311984&lang=en-gb&sb=1&src_elem=sb&src=hotel&checkin=2026-02-07&checkout=2026-02-08&group_adults=2&no_rooms=1&group_children=0#availability_target",
+                price: "From R2063 per night",
+                distance: "1.6 km from venue"
               },
               {
                 name: "Eendracht Apartments",
@@ -677,12 +678,6 @@ was something special.
                 distance: "1.5 km"
               },
               {
-                name: "33 Longifolia",
-                url: "https://www.lekkeslaap.co.za/accommodation/33-longifolia",
-                price: "From R1125 per night",
-                distance: "14.5 km from venue"
-              },
-              {
                 name: "4 Piet Retief",
                 url: "https://www.lekkeslaap.co.za/accommodation/4-piet-retief/rooms",
                 price: "From R2400 for 2 nights (must book 2 nights)",
@@ -693,6 +688,30 @@ was something special.
                 url: "https://www.lekkeslaap.co.za/accommodation/kockies--die-boord/rooms",
                 price: "From R1200 per night",
                 distance: "11.8 km from venue"
+              },
+              {
+                name: "Banhoek Corner Lodge",
+                url: "https://www.booking.com/hotel/za/banhoek-corner-guesthouse.en-gb.html?aid=311984&label=orange-ville-guesthouse-sHomYwpT0_0d5A4aKpmweQS253746015346%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-36148878703%3Alp9219128%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YTQUGSsRwx9_3qo3uPTHyoo&sid=336cfc7c2a5c7574edff7404b4efa774&all_sr_blocks=683523313_366449820_2_1_0&checkin=2026-02-07&checkout=2026-02-08&dest_id=6835233&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=683523313_366449820_2_1_0&hpos=1&matching_block_id=683523313_366449820_2_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=683523313_366449820_2_1_0__344000&srepoch=1738929253&srpvid=e35053b1f8730692&type=total&ucfs=1&",
+                price: "From R4499 per night",
+                distance: "1 km from venue"
+              },
+              {
+                name: "Lumley's Place",
+                url: "https://www.booking.com/hotel/za/lumleys-place-bed-amp-breakfast.en-gb.html?aid=311984&label=orange-ville-guesthouse-sHomYwpT0_0d5A4aKpmweQS253746015346%3Apl%3Ata%3Ap1%3Ap2%3Aac%3Aap%3Aneg%3Afi%3Atikwd-36148878703%3Alp9219128%3Ali%3Adec%3Adm%3Appccp%3DUmFuZG9tSVYkc2RlIyh9YTQUGSsRwx9_3qo3uPTHyoo&sid=336cfc7c2a5c7574edff7404b4efa774&all_sr_blocks=124011904_387052336_2_1_0&checkin=2026-02-07&checkout=2026-02-08&dest_id=1240119&dest_type=hotel&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=124011904_387052336_2_1_0&hpos=1&matching_block_id=124011904_387052336_2_1_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=124011904_387052336_2_1_0__270000&srepoch=1738929381&srpvid=804653f0533f05bc&type=total&ucfs=1&",
+                price: "From R2700 per night",
+                distance: "3.1 km from venue"
+              },
+              {
+                name: "33 Longifolia",
+                url: "https://www.lekkeslaap.co.za/accommodation/33-longifolia",
+                price: "From R1125 per night",
+                distance: "14.5 km from venue"
+              },
+              {
+                name: "The Little Hideaway Guesthouse",
+                url: "https://book.nightsbridge.com/30700",
+                price: "From R1200 per night",
+                distance: "7.2 km from venue"
               }
             ].map((hotel, idx) => (
               <a
@@ -744,12 +763,25 @@ was something special.
           <h3 className="text-2xl font-serif mb-6 mt-8 text-red-600 text-center">For 4 People</h3>
           <div className="grid gap-8 md:grid-cols-2 mb-4">
             {[
+               {
+                name: "Moores End Cottages and Guesthouses",
+                url: "https://www.mooresend.co.za/contact.html",
+                price: "From R800 - R1000 PER PERSON for cottages, R600 - R800 PER PERSON for suites",
+                distance: "1,9 km from venue"
+              },
               {
                 name: "Kockies @ die Boord",
                 url: "https://www.lekkeslaap.co.za/accommodation/kockies--die-boord/rooms",
                 price: "From R2400 for 2 rooms per night",
                 distance: "11.8 km from venue"
-              }
+              },
+              {
+                name: "Minserie Collection",
+                url: "https://www.booking.com/Share-XDDQ7g",
+                price: "From R5400 per night",
+                distance: "8.9 km from venue"
+              },
+             
             ].map((hotel, idx) => (
               <a
                 key={hotel.name}
