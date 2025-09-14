@@ -1,7 +1,6 @@
 import React, { useEffect, useState, lazy, Suspense, useRef } from 'react';
 import { Heart, Calendar, Clock, MapPin, Send, Camera, Gift, Music, Cake, Glasses as Glass, ChevronLeft, ChevronRight } from 'lucide-react';
 import Cookies from 'js-cookie';
-import HeartBackground from './components/HeartBackground';
 import Countdown from './components/Countdown';
 import PasswordModal from './components/PasswordModal';
 import { Analytics } from '@vercel/analytics/react';
@@ -339,7 +338,7 @@ function App() {
 
       {/* Home Section */}
       <section ref={sections[0].ref} className="h-[90vh] relative overflow-hidden">
-        <HeartBackground />
+        {/* <HeartBackground /> */} {/* <-- Remove the heart effect */}
         <div
           className="absolute top-0 left-0 h-full flex"
           onTransitionEnd={handleHeroTransitionEnd}
@@ -350,14 +349,22 @@ function App() {
           }}
         >
           {[...heroImages, ...heroImages].map((image, index) => (
-          <div
-            key={index}
-            className={`h-full flex-shrink-0 bg-cover bg-center box-border ${!isMobile ? 'border-r-8 border-white' : ''}`}
-            style={{ 
-              width: `${imageWidthVw}vw`,
-              backgroundImage: `url("${image}")` 
-            }}
-          />
+            <div
+              key={index}
+              className={`h-full flex-shrink-0 bg-cover bg-center box-border ${!isMobile ? 'border-r-8 border-white' : ''} relative`}
+              style={{
+                width: `${imageWidthVw}vw`,
+              }}
+            >
+              <img
+                src={image}
+                alt={`Hero ${index + 1}`}
+                className="w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-0 hero-img"
+                style={{ position: 'absolute', inset: 0 }}
+                onLoad={e => e.currentTarget.classList.add('opacity-100')}
+                loading="eager"
+              />
+            </div>
           ))}
         </div>
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
@@ -369,6 +376,16 @@ function App() {
             <p className="text-xl md:text-2xl font-soul animate-slide-up tracking-widest">at our wedding</p>
           </div>
         </div>
+        <style>
+          {`
+            .hero-img {
+              opacity: 0;
+            }
+            .hero-img.opacity-100 {
+              opacity: 1;
+            }
+          `}
+        </style>
       </section>
 
       {/* Our Story Section */}
