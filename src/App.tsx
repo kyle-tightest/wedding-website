@@ -820,7 +820,7 @@ was something special.
       </section>
 
       {/* Look Book Section */}
-      <section ref={sections[6].ref} className="py-10 px-4 bg-gray-100">
+      <section ref={sections[6].ref} className="py-20 px-4 bg-gray-100">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-4xl md:text-5xl font-soul text-center mb-5 text-shimmer pb-2">Look Book</h2>
           <p className="text-gray-700 mb-6">

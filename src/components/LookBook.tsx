@@ -1,6 +1,6 @@
 const lookBookImages = [
   {
-    src: "/img/lookbook1.png",
+    src: "/img/lookbook-1.png",
     alt: "Look Book Example 1",
     caption: "Keep it chic, keep it black",
   },
