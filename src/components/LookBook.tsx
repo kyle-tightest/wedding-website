@@ -1,10 +1,8 @@
-import React from "react";
-
 const lookBookImages = [
   {
     src: "/img/lookbook1.png",
     alt: "Look Book Example 1",
-    caption: "Elegant, semi-formal attire in neutral or pastel tones.",
+    caption: "Keep it chic, keep it black",
   },
   {
     src: "/img/lookbook2.png",
@@ -19,6 +17,16 @@ const lookBookImages = [
   {
     src: "/img/lookbook4.png",
     alt: "Look Book Example 4",
+    caption: "No jeans, shorts, or sneakers please.",
+  },
+  {
+    src: "/img/lookbookmen1.png",
+    alt: "Look Book Example 5",
+    caption: "No jeans, shorts, or sneakers please.",
+  },
+  {
+    src: "/img/lookbookmen2.png",
+    alt: "Look Book Example 6",
     caption: "No jeans, shorts, or sneakers please.",
   },
   // Add more images as needed
@@ -52,8 +60,11 @@ export default function LookBook() {
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-300 py-12 px-4">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl sm:text-5xl font-soul text-center mb-8 text-shimmer">Wedding Look Book</h1>
-        <p className="text-center text-lg text-gray-700 mb-10">
-          Here are some style inspirations for our wedding! Please dress in elegant, semi-formal attire. Think garden party, winelands chic, and comfortable shoes for the lawns and dance floor.
+        <p className="text-center text-lg text-gray-700 mb-10 font-soul">
+          We'd love everyone to join us in an all-black theme for the wedding. Feel free to play with different fabrics, textures and fits to make it your own.
+        </p>
+        <p className="text-center text-lg text-gray-700 mb-10 font-soul">
+        A crisp white shirt is permitted. Think black in any style, from sleek to playful. Check out some inspiration below!          
         </p>
         <div className="grid gap-8 md:grid-cols-2">
           {lookBookImages.map((img, idx) => (
@@ -75,7 +86,7 @@ export default function LookBook() {
                 </div>
               </div>
               <div className="p-4 text-center bg-gray-100">
-                <p className="text-gray-700 animate-fade-in">{img.caption}</p>
+                {/* <p className="text-gray-700 animate-fade-in">{img.caption}</p> */}
               </div>
             </div>
           ))}
