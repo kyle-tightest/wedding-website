@@ -536,7 +536,7 @@ was something special.
             {[
               {
                 q: "What is the dress code?",
-                a: "Dress to impress - Formal attire requested. Think black tie elegance. Check out our look book for inspiration."
+                a: "We'd love everyone to join us in an all-black theme for the wedding. Think black in any style, from sleek to playful. A white shirt is permitted."
               },
               {
                 q: "Can I bring a plus one?",
