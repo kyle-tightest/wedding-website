@@ -90,6 +90,7 @@ export default async function handler(
             </ul>
             <p>We can't wait to see you on <strong>February 7, 2026</strong>.</p>
             <p>If you need to change your details, you can do so by visiting our website again.</p>
+            <a href="https://www.robinandkyle.com">https://www.robinandkyle.com</a>
             <br>
             <p>With love,</p>
             <p><strong>Robin & Kyle</strong></p>
