@@ -461,6 +461,10 @@ export default function LoveBirdsGame() {
 
   return (
     <div className="flex flex-col items-center">
+       <p className="mt-6 mb-10 text-gray-600 text-center">
+        Click or tap to make the love bird fly and collect hearts!<br />
+        Don't hit the top or bottom edges!
+      </p>
       <canvas
         ref={canvasRef}
         onClick={handleClick}
@@ -468,10 +472,6 @@ export default function LoveBirdsGame() {
         className="bg-white rounded-lg shadow-lg cursor-pointer premium-border premium-shadow"
         style={{ touchAction: 'none' }}
       />
-      <p className="mt-6 text-gray-600 text-center font-serif">
-        Click or tap to make the love bird fly and collect hearts!<br />
-        Don't hit the top or bottom edges!
-      </p>
       {/* Show name input on start screen (not during game or game over) */}
       {!gameStarted && !showNamePrompt && (
         <div className="mt-6 flex flex-col items-center">
