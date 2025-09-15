@@ -14,6 +14,15 @@ interface Heart {
   scale: number;
 }
 
+interface Spike {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  isTop: boolean;
+}
+
+
 export default function LoveBirdsGame() {
   const [nameError, setNameError] = useState("");
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -25,8 +34,10 @@ export default function LoveBirdsGame() {
   const [scoreSubmitted, setScoreSubmitted] = useState(false);
   const birdRef = useRef<Bird>({ x: 50, y: 150, velocity: 0, rotation: 0 });
   const heartsRef = useRef<Heart[]>([]);
+  const spikesRef = useRef<Spike[]>([]);
   const animationFrameRef = useRef<number>();
   const lastHeartSpawnRef = useRef(0);
+  const lastSpikeSpawnRef = useRef(0);
   const gameLogicRef = useRef<() => void>(); // Ref to hold the latest game logic function
   const [backgroundImage, setBackgroundImage] = useState<HTMLImageElement | null>(null);
   const [birdImage, setBirdImage] = useState<HTMLImageElement | null>(null);
@@ -96,8 +107,10 @@ export default function LoveBirdsGame() {
     // Bird starts in the middle-left of the logical canvas
     birdRef.current = { x: LOGICAL_CANVAS_WIDTH * 0.1, y: LOGICAL_CANVAS_HEIGHT / 2, velocity: 0, rotation: 0 };
     heartsRef.current = [];
+    spikesRef.current = []; // Also clear spikes
     setScore(0);
     lastHeartSpawnRef.current = Date.now(); // Reset heart spawn timer
+    lastSpikeSpawnRef.current = Date.now(); // Reset spike spawn timer
     setGameStarted(true);
     // Play game start sound
     if (gameStartSoundRef.current) {
@@ -116,6 +129,39 @@ export default function LoveBirdsGame() {
       collected: false,
       scale: 1
     });
+  };
+
+  const spawnSpike = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const isTop = Math.random() > 0.5;
+    const spikeHeight = LOGICAL_CANVAS_HEIGHT * 0.1;
+    const spikeWidth = spikeHeight / 2;
+
+    spikesRef.current.push({
+      x: LOGICAL_CANVAS_WIDTH,
+      y: isTop ? 0 : LOGICAL_CANVAS_HEIGHT - spikeHeight,
+      width: spikeWidth,
+      height: spikeHeight,
+      isTop: isTop,
+    });
+  };
+
+  const drawSpike = (ctx: CanvasRenderingContext2D, spike: Spike) => {
+    ctx.fillStyle = 'red';
+    ctx.beginPath();
+    if (spike.isTop) {
+      ctx.moveTo(spike.x - spike.width / 2, spike.y);
+      ctx.lineTo(spike.x + spike.width / 2, spike.y);
+      ctx.lineTo(spike.x, spike.y + spike.height);
+    } else {
+      ctx.moveTo(spike.x - spike.width / 2, spike.y + spike.height);
+      ctx.lineTo(spike.x + spike.width / 2, spike.y + spike.height);
+      ctx.lineTo(spike.x, spike.y);
+    }
+    ctx.closePath();
+    ctx.fill();
   };
 
   const handleClick = () => {
@@ -298,11 +344,15 @@ export default function LoveBirdsGame() {
         return;
       }
 
-      // Spawn hearts
+      // Spawn hearts and spikes
       const now = Date.now();
       if (now - lastHeartSpawnRef.current > 1500) {
         spawnHeart();
         lastHeartSpawnRef.current = now;
+      }
+      if (now - lastSpikeSpawnRef.current > 2000) {
+        spawnSpike();
+        lastSpikeSpawnRef.current = now;
       }
 
       // Update and draw hearts
@@ -324,6 +374,30 @@ export default function LoveBirdsGame() {
         drawHeart(ctx, heart.x, heart.y, heart.scale);
         return true;
       });
+
+      // Update and draw spikes, and check for collision
+      spikesRef.current.forEach(spike => {
+        spike.x -= GAME_SPEED;
+        drawSpike(ctx, spike);
+
+        const bird = birdRef.current;
+        const birdRect = { left: bird.x - BIRD_SIZE / 2, right: bird.x + BIRD_SIZE / 2, top: bird.y - BIRD_SIZE / 2, bottom: bird.y + BIRD_SIZE / 2 };
+        const spikeRect = { left: spike.x - spike.width / 2, right: spike.x + spike.width / 2, top: spike.y, bottom: spike.y + spike.height };
+
+        if (birdRect.right > spikeRect.left && birdRect.left < spikeRect.right && birdRect.bottom > spikeRect.top && birdRect.top < spikeRect.bottom) {
+            if (score > highScore) {
+              setHighScore(score);
+              localStorage.setItem('loveBirdsHighScore', score.toString());
+            }
+            if (gameOverSoundRef.current) {
+              gameOverSoundRef.current.play().catch(error => console.warn("Error playing game over sound:", error));
+            }
+            setGameStarted(false);
+            setShowNamePrompt(true);
+        }
+      });
+
+      spikesRef.current = spikesRef.current.filter(spike => spike.x + spike.width > 0);
       // Draw bird
       drawBird(ctx);
 
@@ -463,7 +537,7 @@ export default function LoveBirdsGame() {
     <div className="flex flex-col items-center">
        <p className="mt-6 mb-10 text-gray-600 text-center">
         Click or tap to make the love bird fly and collect hearts!<br />
-        Don't hit the top or bottom edges!
+        Don't hit the top or bottom edges, and avoid the red spikes!
       </p>
       <canvas
         ref={canvasRef}
