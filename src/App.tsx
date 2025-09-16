@@ -591,14 +591,14 @@ was something special.
             ) : (
               <form onSubmit={handleRsvpSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-gray-700 mb-2 font-serif tracking-wide">Full Name</label>
+                  <label className="block text-gray-700 mb-2 font-serif tracking-wide">Full Name & Surname</label>
                   <input
                     type="text"
                     name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transform transition-transform duration-200 hover:scale-[1.01] premium-border input-premium text-gray-700"
-                    placeholder="Enter your full name"
+                    placeholder="Enter your full name and surname"
                     required
                   />
                 </div>
