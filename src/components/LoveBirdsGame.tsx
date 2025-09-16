@@ -20,6 +20,7 @@ interface Spike {
   width: number;
   height: number;
   isTop: boolean;
+  vy: number;
 }
 
 
@@ -145,11 +146,22 @@ export default function LoveBirdsGame() {
       width: spikeWidth,
       height: spikeHeight,
       isTop: isTop,
+      vy: Math.random() * 4 - 2, // Add this line
     });
   };
 
   const drawSpike = (ctx: CanvasRenderingContext2D, spike: Spike) => {
-    ctx.fillStyle = 'red';
+    const gradient = ctx.createLinearGradient(spike.x - spike.width / 2, spike.y, spike.x + spike.width / 2, spike.y);
+    gradient.addColorStop(0, "#8B0000"); // Darker Red
+    gradient.addColorStop(0.5, "#FF4500"); // Lighter Red (OrangeRed)
+    gradient.addColorStop(1, "#8B0000"); // Darker Red
+
+    ctx.fillStyle = gradient;
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 3;
+    ctx.shadowOffsetY = 3;
+
     ctx.beginPath();
     if (spike.isTop) {
       ctx.moveTo(spike.x - spike.width / 2, spike.y);
@@ -162,6 +174,12 @@ export default function LoveBirdsGame() {
     }
     ctx.closePath();
     ctx.fill();
+
+    // Reset shadow for other elements
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
   };
 
   const handleClick = () => {
@@ -378,6 +396,21 @@ export default function LoveBirdsGame() {
       // Update and draw spikes, and check for collision
       spikesRef.current.forEach(spike => {
         spike.x -= GAME_SPEED;
+
+        // Move the spike vertically
+        spike.y += spike.vy;
+
+        // Bounce off top and bottom edges
+        if (spike.isTop) {
+          if (spike.y + spike.height > LOGICAL_CANVAS_HEIGHT / 2 || spike.y < 0) {
+            spike.vy *= -1;
+          }
+        } else {
+          if (spike.y < LOGICAL_CANVAS_HEIGHT / 2 || spike.y + spike.height > LOGICAL_CANVAS_HEIGHT) {
+            spike.vy *= -1;
+          }
+        }
+
         drawSpike(ctx, spike);
 
         const bird = birdRef.current;
@@ -537,7 +570,7 @@ export default function LoveBirdsGame() {
     <div className="flex flex-col items-center">
        <p className="mt-6 mb-10 text-gray-600 text-center">
         Click or tap to make the love bird fly and collect hearts!<br />
-        Don't hit the top or bottom edges, and avoid the red spikes!
+        Don't hit the top or bottom edges, and avoid the spikes!
       </p>
       <canvas
         ref={canvasRef}
