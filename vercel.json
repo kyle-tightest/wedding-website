@@ -1,12 +1,5 @@
 {
   "rewrites": [
-    { "source": "/(.*)", 
-    "has": [
-        {
-          "type": "host",
-          "value": "localhost"
-        }
-      ],
-    "destination": "/" }
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
