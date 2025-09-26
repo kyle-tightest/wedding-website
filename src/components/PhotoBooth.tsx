@@ -10,18 +10,50 @@ export default function PhotoBooth() {
   const [isUploading, setIsUploading] = useState(false);
   const [cameraActive, setCameraActive] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [useRearCamera, setUseRearCamera] = useState(true); // default to rear camera
+  const [rearCameraAvailable, setRearCameraAvailable] = useState(false);
+
+  // Detect rear camera availability on mount
+  useEffect(() => {
+    async function checkRearCamera() {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const hasRear = devices.some(
+          (d) =>
+            d.kind === "videoinput" &&
+            (d.label.toLowerCase().includes("back") ||
+              d.label.toLowerCase().includes("rear") ||
+              d.label.toLowerCase().includes("environment"))
+        );
+        setRearCameraAvailable(hasRear);
+        setUseRearCamera(hasRear); // default to rear if available
+      } catch {
+        setRearCameraAvailable(false);
+        setUseRearCamera(false);
+      }
+    }
+    checkRearCamera();
+  }, []);
 
   // Automatically start the camera on mount and when returning to camera view
   useEffect(() => {
     let stream: MediaStream | null = null;
     const startCamera = async () => {
       try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: useRearCamera
+            ? { facingMode: { exact: "environment" } }
+            : { facingMode: "user" }
+        });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
           await videoRef.current.play();
         }
       } catch (err) {
+        // fallback to front camera if rear is not available
+        if (useRearCamera) {
+          setUseRearCamera(false);
+        }
         console.log("Could not access camera.");
       }
     };
@@ -35,7 +67,7 @@ export default function PhotoBooth() {
         videoRef.current.srcObject = null;
       }
     };
-  }, [cameraActive]);
+  }, [cameraActive, useRearCamera]);
 
   const takePhoto = () => {
     if (!videoRef.current || !canvasRef.current) return;
@@ -70,6 +102,8 @@ export default function PhotoBooth() {
       setTimeout(() => {
         setShowModal(false);
         setPhotoDataUrl(null);
+        // If rear camera is not available, ensure we use front camera
+        if (!rearCameraAvailable) setUseRearCamera(false);
         setCameraActive(true);
       }, 1800);
     } catch (err) {
@@ -81,7 +115,15 @@ export default function PhotoBooth() {
 
   const backToCamera = () => {
     setPhotoDataUrl(null);
+    // If rear camera is not available, ensure we use front camera
+    if (!rearCameraAvailable) setUseRearCamera(false);
     setCameraActive(true);
+  };
+
+  const handleSwitchCamera = () => {
+    setUseRearCamera((prev) => !prev);
+    setCameraActive(false);
+    setTimeout(() => setCameraActive(true), 100); // restart camera after switching
   };
 
   return (
@@ -114,13 +156,29 @@ export default function PhotoBooth() {
         <div className="absolute bottom-0 left-0 w-full flex flex-col items-center pb-8">
           <div className="flex items-center justify-center gap-8 mb-4">
             {!photoDataUrl ? (
-              <button
-                onClick={takePhoto}
-                className="w-16 h-16 rounded-full bg-white border-4 border-gray-400 shadow-lg flex items-center justify-center active:scale-95 transition-transform"
-                aria-label="Take Photo"
-              >
-                <span className="block w-8 h-8 rounded-full bg-gray-300" />
-              </button>
+              <>
+                <button
+                  onClick={takePhoto}
+                  className="w-16 h-16 rounded-full bg-white border-4 border-gray-400 shadow-lg flex items-center justify-center active:scale-95 transition-transform"
+                  aria-label="Take Photo"
+                >
+                  <span className="block w-8 h-8 rounded-full bg-gray-300" />
+                </button>
+                {rearCameraAvailable && (
+                  <button
+                    onClick={handleSwitchCamera}
+                    className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg border-4 border-blue-800 transition-opacity"
+                    aria-label="Switch Camera"
+                    title={useRearCamera ? "Use Front Camera" : "Use Rear Camera"}
+                  >
+                    {/* Camera switch icon */}
+                    <svg className="w-7 h-7" fill="none" stroke="white" strokeWidth="2.5" viewBox="0 0 24 24">
+                      <path d="M15 7l-5 5 5 5" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M20 12a8 8 0 11-16 0" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                )}
+              </>
             ) : (
               <>
                 <button
