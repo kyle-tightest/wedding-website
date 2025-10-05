@@ -17,6 +17,7 @@
     "@vercel/blob": "^1.1.1",
     "@vercel/speed-insights": "^1.2.0",
     "cookie": "^1.0.2",
+    "framer-motion": "^12.23.22",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.344.0",
     "nodemailer": "^7.0.4",
