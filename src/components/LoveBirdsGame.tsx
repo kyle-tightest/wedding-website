@@ -33,6 +33,8 @@ export default function LoveBirdsGame() {
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [playerName, setPlayerName] = useState("");
   const [scoreSubmitted, setScoreSubmitted] = useState(false);
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
+  const [leaderboard, setLeaderboard] = useState<{ name: string; score: number }[]>([]);
   const birdRef = useRef<Bird>({ x: 50, y: 150, velocity: 0, rotation: 0 });
   const heartsRef = useRef<Heart[]>([]);
   const spikesRef = useRef<Spike[]>([]);
@@ -100,8 +102,15 @@ export default function LoveBirdsGame() {
     // gameStartSoundRef.current.onerror = () => console.error("Failed to load game start sound.");
     // gameOverSoundRef.current.onerror = () => console.error("Failed to load game over sound.");
 
-
+    fetchLeaderboard();
   }, []);
+
+  const fetchLeaderboard = () => {
+    fetch('/api/top-scores')
+      .then(res => res.json())
+      .then(data => setLeaderboard(data))
+      .catch(err => console.error("Failed to fetch leaderboard:", err));
+  };
 
   const resetGame = () => {
     const canvas = canvasRef.current;
@@ -233,7 +242,8 @@ export default function LoveBirdsGame() {
         BIRD_SIZE/3,
         Math.PI/4,
         0,
-        Math.PI * 2
+        Math.PI * 2,
+        false
       );
       ctx.fill();
 
@@ -457,13 +467,28 @@ export default function LoveBirdsGame() {
   // Handle score submission (moved to top-level)
   useEffect(() => {
     if (showNamePrompt && !scoreSubmitted && playerName && score > 0) {
+      setSubmissionError(null); // Reset error on new submission
       fetch('/api/love-birds-score', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: playerName, score }),
       })
-        .then(() => setScoreSubmitted(true))
-        .catch(() => setScoreSubmitted(true));
+        .then(async (res) => {
+            if (!res.ok) {
+                const errorText = await res.text();
+                throw new Error(errorText || 'Failed to submit score. The server may be down.');
+            }
+            return res.json();
+        })
+        .then(() => {
+          setScoreSubmitted(true);
+          fetchLeaderboard();
+        })
+        .catch((err) => {
+            console.error("Score submission error:", err);
+            setSubmissionError(err.message || 'An unknown error occurred during submission.');
+            setScoreSubmitted(false); // Allow retry
+        });
     }
   }, [showNamePrompt, playerName, score, scoreSubmitted]);
 
@@ -603,6 +628,19 @@ export default function LoveBirdsGame() {
           </button>
         </div>
       )}
+      {leaderboard.length > 0 && (
+        <div className="w-full max-w-md mt-8 bg-glass p-4 sm:p-6 rounded-lg backdrop-blur-md text-center shadow-lg">
+          <h2 className="text-2xl font-bold mb-4 text-gray-800" style={{ fontFamily: '"Press Start 2P", cursive' }}>Top 5 Love Birds ❤️</h2>
+          <ol className="text-left space-y-2">
+            {leaderboard.map((entry, index) => (
+              <li key={index} className="flex justify-between items-center p-2 rounded-md bg-white bg-opacity-20">
+                <span className="font-bold text-lg text-gray-700" style={{ fontFamily: '"Press Start 2P", cursive' }}>{index + 1}. {entry.name}</span>
+                <span className="font-mono text-xl text-pink-500">{entry.score}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
       {/* Game Over Prompt (no name input) */}
       {showNamePrompt && (
         <div
@@ -624,6 +662,8 @@ export default function LoveBirdsGame() {
             <p className="mb-2">Your score: <span className="font-mono text-xl">{score}</span></p>
             {scoreSubmitted ? (
               <span className="text-green-600 font-semibold">Score saved!</span>
+            ) : submissionError ? (
+                <span className="text-red-600 font-semibold">{submissionError}</span>
             ) : (
               <span className="text-gray-600">Saving score...</span>
             )}
