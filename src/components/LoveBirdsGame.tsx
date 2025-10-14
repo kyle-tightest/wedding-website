@@ -634,7 +634,21 @@ export default function LoveBirdsGame() {
           <ol className="text-left space-y-2">
             {leaderboard.map((entry, index) => (
               <li key={index} className="flex justify-between items-center p-2 rounded-md bg-white bg-opacity-20">
-                <span className="font-bold text-lg text-gray-700" style={{ fontFamily: '"Press Start 2P", cursive' }}>{index + 1}. {entry.name}</span>
+                <span className="font-bold text-lg text-gray-700 flex items-center" style={{ fontFamily: '"Press Start 2P", cursive' }}>
+                  {index + 1}.
+                  {index === 0 && (
+                    <svg
+                      className="inline-block ml-2 w-8 h-8 text-yellow-500"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-label="King"
+                    >
+                      <path d="M5 8l3.09 6.26a1 1 0 00.91.74h5a1 1 0 00.91-.74L19 8l-3.5 2.5L12 5l-3.5 5.5L5 8z" />
+                      <rect x="7" y="16" width="10" height="2" rx="1" fill="#fbbf24"/>
+                    </svg>
+                  )}
+                  {entry.name}
+                </span>
                 <span className="font-mono text-xl text-pink-500">{entry.score}</span>
               </li>
             ))}
