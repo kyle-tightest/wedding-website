@@ -494,7 +494,7 @@ was something special.
                 icon: <Clock className="w-10 h-10 text-red-500 drop-shadow-lg animate-spin-slow" />,
                 title: "Ceremony",
                 time: "15:30 PM - 16:15 PM",
-                desc: "We walk down the aisle and exchange vows"
+                desc: "We walk down the aisle and exchange vows. Please be there 30 minutes early."
               },
               {
                 icon: <GlassWater className="w-10 h-10 text-yellow-500 drop-shadow-lg animate-wiggle" />,
@@ -555,7 +555,22 @@ was something special.
               },
               {
                 q: "Gifting",
-                a: "Gifts are welcome but not expected. Registry to be added soon."
+                a: (
+                  <>
+                    Gifts are welcome but not expected. Should you wish to bless us with a gift, 
+                    our registries can be found at the following links:
+                    <br />
+                    <a href="https://www.mrphome.com/en_za/giftregistry/view/index/id/RHWEDD8254" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                      Mr Price Home
+                    </a>
+                    <br />
+                    <a href="https://www.yuppiechef.com/registry.htm?action=view&uuid=c062bec3-b351-48b2-a249-5cd38fb583e6" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                      Yuppiechef
+                    </a>
+                    <br />
+                    Bank details will also be provided.
+                  </>
+                )
               }
             ].map((faq, index) => (
               <div 
@@ -564,7 +579,7 @@ was something special.
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <h3 className="text-2xl font-serif mb-4 text-red-600">{faq.q}</h3>
-                <p className="text-gray-600 leading-relaxed tracking-wide">{faq.a}</p>
+                <div className="text-gray-600 leading-relaxed tracking-wide">{faq.a}</div>
               </div>
             ))}
           </div>
