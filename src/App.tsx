@@ -13,6 +13,7 @@ const Starfield = lazy(() => import('./components/Starfield'));
 const LoveBirdsGame = lazy(() => import('./components/LoveBirdsGame'));
 const MusicPlayer = lazy(() => import('./components/MusicPlayer'));
 const WeddingParty = lazy(() => import('./components/WeddingParty'));
+const ImpersonatorChallenge = lazy(() => import('./components/ImpersonatorChallenge'));
 
 function App() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -932,6 +933,15 @@ was something special.
               <Heart className="w-12 h-12 text-red-500 animate-pulse" />
             </div>
             <LoveBirdsGame />
+          </Suspense>
+        </div>
+      </section>
+
+      {/* Impersonator Challenge Section */}
+      <section className="py-20 px-4 bg-gray-100">
+        <div className="max-w-4xl mx-auto text-center">
+          <Suspense fallback={<div className="h-64 bg-gray-200 rounded-lg" />}>
+            <ImpersonatorChallenge />
           </Suspense>
         </div>
       </section>
