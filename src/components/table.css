@@ -20,3 +20,10 @@
   margin-bottom: 0.5rem;
   cursor: grab;
 }
+
+.table-footer {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}

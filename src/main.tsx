@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/lookbook" element={<LookBook />} />
         <Route path="/photo-booth" element={<PhotoBooth />} />
         <Route path="/photo-gallery" element={<PhotoGallery />} />
-        <Route path="/seating-chart" element={<SeatingChart />} />
+        <Route path="/seating-chart-leafy-monologue-dresden" element={<SeatingChart />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

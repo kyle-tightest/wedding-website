@@ -25,6 +25,9 @@ const Table = ({ tableNumber, guests }: { tableNumber: number, guests: string[] 
           </ul>
         )}
       </Droppable>
+      <div className="table-footer">
+        Total: {guests.length} / 8
+      </div>
     </div>
   );
 };

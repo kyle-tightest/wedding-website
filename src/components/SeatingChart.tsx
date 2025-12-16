@@ -190,7 +190,7 @@ const SeatingChart = () => {
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
-              <h2>Guest List</h2>
+              <h2>Guest List ({names.length})</h2>
               <ul>
                 {names.map((name, index) => (
                   <Draggable key={name} draggableId={name} index={index}>
