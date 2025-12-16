@@ -142,6 +142,7 @@
     background: linear-gradient(45deg, transparent, rgba(0, 0, 0, 0.1));
     opacity: 0;
     transition: 0.3s;
+    pointer-events: none;
   }
 
   .card-premium:hover {
