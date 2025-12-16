@@ -6,6 +6,7 @@ import LookBook from './components/LookBook.tsx';
 import PhotoBooth from './components/PhotoBooth.tsx';
 import './index.css';
 import PhotoGallery from './components/PhotoGallery.tsx';
+import SeatingChart from './components/SeatingChart.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/lookbook" element={<LookBook />} />
         <Route path="/photo-booth" element={<PhotoBooth />} />
         <Route path="/photo-gallery" element={<PhotoGallery />} />
+        <Route path="/seating-chart" element={<SeatingChart />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
