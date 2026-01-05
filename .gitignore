@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Guest list used for "send-gift-registry-email.ts" script
+guests.csv
