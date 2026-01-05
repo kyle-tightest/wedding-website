@@ -557,8 +557,9 @@ was something special.
                 q: "Gifting",
                 a: (
                   <>
-                    Gifts are welcome but not expected. Should you wish to bless us with a gift, 
-                    our registries can be found at the following links:
+                    Gifts are welcome but not expected. 
+                    <br />
+                    Should you wish to bless us with a gift, our registries can be found at the following links:
                     <br />
                     <a href="https://www.mrphome.com/en_za/giftregistry/view/index/id/RHWEDD8254" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
                       Mr Price Home
@@ -568,7 +569,7 @@ was something special.
                       Yuppiechef
                     </a>
                     <br />
-                    Bank details will also be provided.
+                    Bank details have been provided in an email for those who want to contribute that way.
                   </>
                 )
               }
