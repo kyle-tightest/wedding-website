@@ -1,7 +1,7 @@
 import React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-const Table = ({ tableNumber, guests }: { tableNumber: number, guests: string[] }) => {
+const Table = ({ tableNumber, guests, capacity }: { tableNumber: number, guests: string[], capacity: number }) => {
   return (
     <div className="table">
       <h2>Table {tableNumber}</h2>
@@ -26,7 +26,7 @@ const Table = ({ tableNumber, guests }: { tableNumber: number, guests: string[] 
         )}
       </Droppable>
       <div className="table-footer">
-        Total: {guests.length} / 8
+        Total: {guests.length} / {capacity}
       </div>
     </div>
   );

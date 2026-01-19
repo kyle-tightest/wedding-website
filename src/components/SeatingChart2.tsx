@@ -4,11 +4,11 @@ import Table from './Table';
 import './seating-chart.css';
 import './table.css';
 
-const SeatingChart = () => {
+const SeatingChart2 = () => {
   const [names, setNames] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [tables, setTables] = useState<string[][]>(Array(17).fill([]));
+  const [tables, setTables] = useState<string[][]>(Array(16).fill([]));
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
 
@@ -17,7 +17,7 @@ const SeatingChart = () => {
       try {
         const [rsvpsResponse, seatingChartResponse] = await Promise.all([
           fetch('/api/get-rsvps'),
-          fetch('/api/get-seating-chart'),
+          fetch('/api/get-seating-chart-2'),
         ]);
 
         if (!rsvpsResponse.ok) {
@@ -60,19 +60,35 @@ const SeatingChart = () => {
 
   
 
-      if (destination.droppableId.startsWith('table-')) {
+            if (destination.droppableId.startsWith('table-')) {
 
-        const tableIndex = parseInt(destination.droppableId.split('-')[1], 10) - 1;
+  
 
-        if (tables[tableIndex].length >= 8) {
+              const tableIndex = parseInt(destination.droppableId.split('-')[1], 10) - 1;
 
-          alert('A table can have a maximum of 8 guests.');
+  
 
-          return;
+              const maxGuests = tableIndex < 2 ? 10 : 8;
 
-        }
+  
 
-      }
+              if (tables[tableIndex].length >= maxGuests) {
+
+  
+
+                alert(`This table can have a maximum of ${maxGuests} guests.`);
+
+  
+
+                return;
+
+  
+
+              }
+
+  
+
+            }
 
   
 
@@ -144,7 +160,7 @@ const SeatingChart = () => {
     setIsSaving(true);
     setSaveMessage('');
     try {
-      const response = await fetch('/api/save-seating-chart', {
+      const response = await fetch('/api/save-seating-chart-2', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -180,7 +196,7 @@ const SeatingChart = () => {
         {error && <p>Error: {error}</p>}
         <div className="tables-container">
           {tables.map((guests, index) => (
-            <Table key={index} tableNumber={index + 1} guests={guests} capacity={8} />
+            <Table key={index} tableNumber={index + 1} guests={guests} capacity={index < 2 ? 10 : 8} />
           ))}
         </div>
         <Droppable droppableId="guest-list">
@@ -215,4 +231,4 @@ const SeatingChart = () => {
   );
 };
 
-export default SeatingChart;
+export default SeatingChart2;
