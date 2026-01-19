@@ -7,6 +7,7 @@ import PhotoBooth from './components/PhotoBooth.tsx';
 import './index.css';
 import PhotoGallery from './components/PhotoGallery.tsx';
 import SeatingChart from './components/SeatingChart.tsx';
+import SeatingChart2 from './components/SeatingChart2.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/photo-booth" element={<PhotoBooth />} />
         <Route path="/photo-gallery" element={<PhotoGallery />} />
         <Route path="/seating-chart-leafy-monologue-dresden" element={<SeatingChart />} />
+        <Route path="/seating-chart-leafy-monologue-dresden-2" element={<SeatingChart2 />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
