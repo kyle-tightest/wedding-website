@@ -1,160 +1,71 @@
-import React, { useEffect, useState } from 'react';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-import Table from './Table';
+import { useEffect, useState, useRef } from 'react';
+
+import { motion } from 'framer-motion';
 import './seating-chart.css';
-import './table.css';
+
+interface Table {
+  guests: string[];
+  x: number;
+  y: number;
+}
 
 const SeatingChart2 = () => {
+  const [tables, setTables] = useState<Table[]>([]);
   const [names, setNames] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [tables, setTables] = useState<string[][]>(Array(16).fill([]));
+  const [_error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+  const [selectedTableIndex, setSelectedTableIndex] = useState<number | null>(null);
+  const [guestSearch, setGuestSearch] = useState('');
+  const constraintsRef = useRef(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSeatingChart = async () => {
       try {
-        const [rsvpsResponse, seatingChartResponse] = await Promise.all([
-          fetch('/api/get-rsvps'),
-          fetch('/api/get-seating-chart-2'),
-        ]);
-
-        if (!rsvpsResponse.ok) {
-          throw new Error('Failed to fetch RSVP data.');
+        const response = await fetch('/api/get-seating-chart-2');
+        const data = await response.json();
+        if (response.ok) {
+          setTables(data.tables || []);
+          setNames(data.names || []);
+        } else {
+          setError(data.message || 'Failed to fetch seating chart');
         }
-        if (!seatingChartResponse.ok) {
-          throw new Error('Failed to fetch seating chart data.');
-        }
-
-        const rsvpsData = await rsvpsResponse.json();
-        const seatingChartData = await seatingChartResponse.json();
-
-        const allGuests: string[] = rsvpsData.names;
-        const seatedGuests: string[] = seatingChartData.seatedGuests;
-        const unseatedGuests = allGuests.filter(guest => !seatedGuests.includes(guest));
-
-        setNames(unseatedGuests);
-        setTables(seatingChartData.tables);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        setError('An error occurred while fetching the seating chart.');
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchData();
+    fetchSeatingChart();
   }, []);
 
-  const onDragEnd = (result: DropResult) => {
+  const handleTableDragEnd = (index: number, info: any) => {
+    const snap = 40;
+    const targetX = tables[index].x + info.offset.x;
+    const targetY = tables[index].y + info.offset.y;
+    const snappedX = Math.round(targetX / snap) * snap;
+    const snappedY = Math.round(targetY / snap) * snap;
 
-      const { source, destination } = result;
+    const newTables = [...tables];
+    newTables[index] = { ...newTables[index], x: snappedX, y: snappedY };
+    setTables(newTables);
+  };
 
-  
+  const removeGuestFromTable = (tableIndex: number, guestName: string) => {
+    const newTables = [...tables];
+    newTables[tableIndex].guests = newTables[tableIndex].guests.filter(g => g !== guestName);
+    setTables(newTables);
+    setNames([...names, guestName].sort());
+  };
 
-      if (!destination) {
-
-        return;
-
-      }
-
-  
-
-            if (destination.droppableId.startsWith('table-')) {
-
-  
-
-              const tableIndex = parseInt(destination.droppableId.split('-')[1], 10) - 1;
-
-  
-
-              const maxGuests = tableIndex < 2 ? 10 : 8;
-
-  
-
-              if (tables[tableIndex].length >= maxGuests) {
-
-  
-
-                alert(`This table can have a maximum of ${maxGuests} guests.`);
-
-  
-
-                return;
-
-  
-
-              }
-
-  
-
-            }
-
-  
-
-      const sourceId = source.droppableId;
-
-      const destId = destination.droppableId;
-
-      const sourceIndex = source.index;
-
-      const destIndex = destination.index;
-
-  
-
-      if (sourceId === destId && sourceIndex === destIndex) {
-
-        return;
-
-      }
-
-      
-
-      let draggedGuest: string;
-
-      const newTables = tables.map(t => [...t]);
-
-      let newNames = [...names];
-
-  
-
-      // Remove from source
-
-      if (sourceId === 'guest-list') {
-
-        draggedGuest = newNames.splice(sourceIndex, 1)[0];
-
-      } else {
-
-        const tableIndex = parseInt(sourceId.split('-')[1], 10) - 1;
-
-        draggedGuest = newTables[tableIndex].splice(sourceIndex, 1)[0];
-
-      }
-
-  
-
-      // Add to destination
-
-      if (destId === 'guest-list') {
-
-        newNames.splice(destIndex, 0, draggedGuest);
-
-      } else {
-
-        const tableIndex = parseInt(destId.split('-')[1], 10) - 1;
-
-        newTables[tableIndex].splice(destIndex, 0, draggedGuest);
-
-      }
-
-  
-
-      setTables(newTables);
-
-      setNames(newNames);
-
-    };
+  const addGuestToTable = (tableIndex: number, guestName: string) => {
+    const newTables = [...tables];
+    newTables[tableIndex].guests = [...newTables[tableIndex].guests, guestName];
+    setTables(newTables);
+    setNames(names.filter(n => n !== guestName));
+  };
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -162,72 +73,130 @@ const SeatingChart2 = () => {
     try {
       const response = await fetch('/api/save-seating-chart-2', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tables }),
       });
-
       const data = await response.json();
-
       if (response.ok) {
         setSaveMessage(data.message);
+        setTimeout(() => setSaveMessage(''), 3000);
       } else {
         setSaveMessage(data.message || 'An error occurred.');
       }
     } catch (error) {
-      setSaveMessage('An error occurred while saving the seating chart.');
+      setSaveMessage('An error occurred while saving.');
     } finally {
       setIsSaving(false);
     }
   };
 
+  const staticObjects = [
+    { name: 'Cake Table', x: 120, y: 40, w: 160, h: 80, class: 'cake-table' },
+    { name: 'DJ Table', x: 60, y: 560, w: 60, h: 200, class: 'dj-table' },
+    { name: 'Pillar', x: 400, y: 240, w: 60, h: 60, class: 'pillar' },
+    { name: 'Pillar', x: 820, y: 240, w: 60, h: 60, class: 'pillar' },
+    { name: 'Pillar', x: 400, y: 600, w: 60, h: 60, class: 'pillar' },
+    { name: 'Pillar', x: 820, y: 600, w: 60, h: 60, class: 'pillar' },
+  ];
+
+  if (isLoading) return <div className="seating-chart-container"><h1>Loading...</h1></div>;
+
+  const filteredUnseated = names.filter(n => n.toLowerCase().includes(guestSearch.toLowerCase()));
+
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="seating-chart-container">
-        <h1>Seating Chart</h1>
-        <div className="save-container">
-          <button onClick={handleSave} disabled={isSaving}>
-            {isSaving ? 'Saving...' : 'Save Chart'}
-          </button>
-          {saveMessage && <p>{saveMessage}</p>}
-        </div>
-        {isLoading && <p>Loading...</p>}
-        {error && <p>Error: {error}</p>}
-        <div className="tables-container">
-          {tables.map((guests, index) => (
-            <Table key={index} tableNumber={index + 1} guests={guests} capacity={index < 2 ? 10 : 8} />
+    <div className="seating-chart-container">
+      <h1>Seating Chart</h1>
+
+      <div className="save-container">
+        <button onClick={handleSave} disabled={isSaving}>
+          {isSaving ? 'Saving...' : 'Save Layout'}
+        </button>
+        {saveMessage && <p style={{ color: '#10b981', marginTop: '0.5rem', fontWeight: 600 }}>{saveMessage}</p>}
+      </div>
+
+      <div className="grid-canvas" ref={constraintsRef}>
+        {staticObjects.map((obj, i) => (
+          <div key={`static-${i}`} className={`static-object ${obj.class}`} style={{ left: obj.x, top: obj.y, width: obj.w, height: obj.h }}>
+            <span>{obj.name}</span>
+          </div>
+        ))}
+
+        {tables.map((table, index) => (
+          <motion.div
+            key={`table-${index}`}
+            drag
+            dragMomentum={false}
+            dragConstraints={constraintsRef}
+            animate={{ x: table.x, y: table.y }}
+            onDragEnd={(_e, info) => handleTableDragEnd(index, info)}
+            whileDrag={{ scale: 1.05, zIndex: 50 }}
+            className={`table-node ${index === 16 ? 'bridal-table' : ''}`}
+            onClick={() => setSelectedTableIndex(index)}
+            style={{ position: 'absolute' }}
+          >
+            <div className="table-header-simple">Table {index + 1}</div>
+            <span className="guest-count">{table.guests.length} Guests</span>
+            <div className="guest-preview">
+              {table.guests.slice(0, 2).map((guest, i) => (
+                <div key={i} className="guest-preview-name">{guest}</div>
+              ))}
+              {table.guests.length > 2 && <div className="guest-preview-more">+ {table.guests.length - 2} more</div>}
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="guest-list-sidebar">
+        <h2>Unseated Guests ({names.length})</h2>
+        <input
+          type="text"
+          placeholder="Search guests..."
+          value={guestSearch}
+          onChange={(e) => setGuestSearch(e.target.value)}
+          className="guest-search-input"
+        />
+        <ul className="unseated-list">
+          {filteredUnseated.map((name, i) => (
+            <li key={i} className="unseated-guest-item">{name}</li>
           ))}
-        </div>
-        <Droppable droppableId="guest-list">
-          {(provided) => (
-            <div
-              className="guest-list-container"
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              <h2>Guest List ({names.length})</h2>
-              <ul>
-                {names.map((name, index) => (
-                  <Draggable key={`${name}-${index}`} draggableId={`${name}-${index}`} index={index}>
-                    {(provided) => (
-                      <li
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        {name}
-                      </li>
-                    )}
-                  </Draggable>
+        </ul>
+      </div>
+
+      {selectedTableIndex !== null && (
+        <div className="guest-popup-overlay" onClick={() => setSelectedTableIndex(null)}>
+          <div className="guest-popup" onClick={e => e.stopPropagation()}>
+            <h2>Table {selectedTableIndex + 1} Seating</h2>
+
+            <div className="popup-section">
+              <h3>Seated Guests</h3>
+              <ul className="popup-guest-list">
+                {tables[selectedTableIndex].guests.map((guest, i) => (
+                  <li key={i}>
+                    {guest}
+                    <button className="remove-guest-btn" onClick={() => removeGuestFromTable(selectedTableIndex, guest)}>×</button>
+                  </li>
                 ))}
-                {provided.placeholder}
+                {tables[selectedTableIndex].guests.length === 0 && <li>No guests seated</li>}
               </ul>
             </div>
-          )}
-        </Droppable>
-      </div>
-    </DragDropContext>
+
+            <div className="popup-section">
+              <h3>Add Guest</h3>
+              <div className="popup-add-list">
+                {names.slice(0, 10).map((name, i) => (
+                  <button key={i} className="add-guest-btn" onClick={() => addGuestToTable(selectedTableIndex, name)}>
+                    + {name}
+                  </button>
+                ))}
+                {names.length > 10 && <p className="small-note">Showing first 10 unseated guests...</p>}
+              </div>
+            </div>
+
+            <button className="close-button" onClick={() => setSelectedTableIndex(null)}>Close</button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 

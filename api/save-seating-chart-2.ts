@@ -31,9 +31,9 @@ export default async function handler(
 
     for (let i = 0; i < tables.length; i++) {
       const tableNumber = i + 1;
-      const guests = tables[i];
+      const { guests, x, y } = tables[i];
       for (const guest of guests) {
-        await client.query('INSERT INTO seating_chart_2 (table_number, guest_name) VALUES ($1, $2);', [tableNumber, guest]);
+        await client.query('INSERT INTO seating_chart_2 (table_number, guest_name, x, y) VALUES ($1, $2, $3, $4);', [tableNumber, guest, x, y]);
       }
     }
 

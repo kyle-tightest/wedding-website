@@ -33,7 +33,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDisintegrating, setIsDisintegrating] = useState(false);
   const [showSecretMessage, setShowSecretMessage] = useState(false);
-  
+
   // Update these paths to match your images in the public/img folder
   const heroImages = [
     "/img/hero-1.jpg",
@@ -45,7 +45,7 @@ function App() {
   // Define images for the "Our Story" carousel
   // TODO: Replace these with your actual image paths in public/img/
   const storyImages = [
-    "/img/story-1.jpg", 
+    "/img/story-1.jpg",
     "/img/story-2.jpg",
     "/img/story-3.jpg",
     "/img/story-4.jpg",
@@ -164,8 +164,7 @@ function App() {
     setIsLoading(true);
 
     // Easter Egg for "Kyle Titus"
-    if (name.trim().toLowerCase() === 'kyle titus' || name.trim().toLowerCase() === 'robin henney')
-    {
+    if (name.trim().toLowerCase() === 'kyle titus' || name.trim().toLowerCase() === 'robin henney') {
       setIsLoading(false); // Stop the loading indicator immediately
 
       const captureAndUpload = async () => {
@@ -306,9 +305,8 @@ function App() {
               </svg>
             </button>
             <div
-              className={`absolute top-14 left-0 w-full z-50 transition-all duration-300 ${
-                navOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-95 pointer-events-none'
-              }`}
+              className={`absolute top-14 left-0 w-full z-50 transition-all duration-300 ${navOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-95 pointer-events-none'
+                }`}
               style={{ transformOrigin: 'top' }}
             >
               <ul className="bg-white shadow-lg border-t border-gray-200">
@@ -372,7 +370,7 @@ function App() {
         <div className="relative h-full flex items-center justify-center">
           <div className="text-center text-white z-10 px-4">
             <p className="text-xl md:text-2xl font-soul mb-4 animate-fade-in tracking-wider">Together with their families</p>
-            <h1 className="text-6xl md:text-7xl lg:text-9xl font-soul mb-6 text-shadow">Robin & Kyle</h1>
+            <h1 className="text-6xl md:text-7xl lg:text-9xl font-soul font-normal mb-6 text-shadow text-white tracking-[0.01em] leading-tight">Robin & Kyle</h1>
             <p className="text-xl md:text-2xl font-soul animate-slide-up tracking-widest">Request the pleasure of your company</p>
             <p className="text-xl md:text-2xl font-soul animate-slide-up tracking-widest">at our wedding</p>
           </div>
@@ -400,19 +398,19 @@ function App() {
           <div className="bg-white bg-opacity-75 p-6 md:p-8 rounded-lg shadow-xl premium-border mb-12">
             <p className="text-gray-700 leading-relaxed text-lg tracking-wide font-soul">
               Despite knowing of each other for years—through mutuals, social
-media, and even brief encounters at a 21st birthday and his
-grandmother’s funeral—it turns out we needed a little help from
-Tinder to actually make things happen! In 2021, I decided to give the
-app a try, and there he was. The moment we matched, he wasted no
-time asking me out. With COVID curfews in place, we made the most
-of our first date on 9 June, 2021—a night that was unforgettable.
-From that point on, things just fell into place. It was easy.<br /><br />
+              media, and even brief encounters at a 21st birthday and his
+              grandmother’s funeral—it turns out we needed a little help from
+              Tinder to actually make things happen! In 2021, I decided to give the
+              app a try, and there he was. The moment we matched, he wasted no
+              time asking me out. With COVID curfews in place, we made the most
+              of our first date on 9 June, 2021—a night that was unforgettable.
+              From that point on, things just fell into place. It was easy.<br /><br />
 
               What made it even better was realizing just how much we had in
-common—our love for anime, rock music, and dreaming about our
-next travel adventure. At our core, we’re both deeply family-oriented
-and have a soft spot for animals. It didn’t take long to see that this
-was something special.
+              common—our love for anime, rock music, and dreaming about our
+              next travel adventure. At our core, we’re both deeply family-oriented
+              and have a soft spot for animals. It didn’t take long to see that this
+              was something special.
             </p>
           </div>
 
@@ -421,9 +419,8 @@ was something special.
             {storyImages.map((image, index) => (
               <div
                 key={`story-img-${index}`}
-                className={`absolute inset-0 bg-contain bg-no-repeat bg-center transition-all ease-in-out duration-1000 transform ${
-                  index === storyImageIndex ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
-                }`}
+                className={`absolute inset-0 bg-contain bg-no-repeat bg-center transition-all ease-in-out duration-1000 transform ${index === storyImageIndex ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
+                  }`}
                 style={{ backgroundImage: `url("${image}")` }}
               />
             ))}
@@ -454,20 +451,20 @@ was something special.
             <MapPin className="w-8 h-8 text-red-500 animate-bounce-slow" />
           </div>
           <h3 className="text-3xl font-soul mb-4 animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]">Zorgvliet Wine Estate</h3>
-            
-            <a
+
+          <a
             href="https://maps.app.goo.gl/9f6cKABHkqjNdZvi9"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xl text-gray-600 mb-12 font-soul animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] tracking-wider underline hover:text-red-600 transition-colors"
-            >
+          >
             Get Directions
-            </a>
-            <div className="mb-8" />
+          </a>
+          <div className="mb-8" />
           <div className="relative group card-premium">
-            <img 
-              src={showVenueSitemap ? "/img/sitemap.png" : "https://zorgvliet.com/wp-content/uploads/2015/07/Zorgvliet-accommodation-location.jpg?auto=format&fit=crop&q=80&w=1920"} 
-              alt={showVenueSitemap ? "Venue Sitemap" : "Venue"} 
+            <img
+              src={showVenueSitemap ? "/img/sitemap.png" : "https://zorgvliet.com/wp-content/uploads/2015/07/Zorgvliet-accommodation-location.jpg?auto=format&fit=crop&q=80&w=1920"}
+              alt={showVenueSitemap ? "Venue Sitemap" : "Venue"}
               className="object-contain w-full max-h-[36rem] object-cover rounded-lg shadow-lg transform group-hover:scale-[1.02] transition-transform duration-500 animate-on-scroll opacity-0 translate-y-8 duration-1000 premium-border cursor-pointer"
               onClick={() => setShowVenueSitemap((prev) => !prev)}
               style={{ border: showVenueSitemap ? '3px solid #e11d48' : undefined }}
@@ -557,7 +554,7 @@ was something special.
                 q: "Gifting",
                 a: (
                   <>
-                    Gifts are welcome but not expected. 
+                    Gifts are welcome but not expected.
                     <br />
                     Should you wish to bless us with a gift, our registries can be found at the following links:
                     <br />
@@ -574,7 +571,7 @@ was something special.
                 )
               }
             ].map((faq, index) => (
-              <div 
+              <div
                 key={index}
                 className="bg-white p-6 md:p-8 rounded-lg shadow-lg premium-border premium-shadow animate-on-scroll opacity-0 translate-y-8 duration-[1500ms] card-premium"
                 style={{ transitionDelay: `${index * 100}ms` }}
@@ -675,7 +672,7 @@ was something special.
       <section ref={sections[5].ref} className="py-16 px-4 bg-gray-100">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-soul text-center mb-10 text-shimmer pb-2">Accommodations Nearby</h2>
-          
+
           {/* For 2 People */}
           <h3 className="text-2xl font-serif mb-6 mt-8 text-red-600 text-center">For 2 People</h3>
           <div className="grid gap-8 md:grid-cols-2 mb-12">
@@ -796,7 +793,7 @@ was something special.
           <h3 className="text-2xl font-serif mb-6 mt-8 text-red-600 text-center">For 4 People</h3>
           <div className="grid gap-8 md:grid-cols-2 mb-4">
             {[
-               {
+              {
                 name: "Moores End Cottages and Guesthouses",
                 url: "https://www.mooresend.co.za/contact.html",
                 price: "From R800 - R1000 PER PERSON for cottages, R600 - R800 PER PERSON for suites",
@@ -814,7 +811,7 @@ was something special.
                 price: "From R5400 per night",
                 distance: "8.9 km from venue"
               },
-             
+
             ].map((hotel, idx) => (
               <a
                 key={hotel.name}
@@ -859,7 +856,7 @@ was something special.
           <div>
             <h3 className="text-2xl font-soul mb-6 text-pink-600">Bridesmaids</h3>
             <div className="grid grid-cols-2 gap-6 mb-12">
-                {[
+              {[
                 {
                   name: "Jeandré Henney",
                   img: "/img/jeandre.jpg"
@@ -868,30 +865,30 @@ was something special.
                   name: "Nadine Vernon-Driscoll",
                   img: "/img/nadine.jpg"
                 }
-                ].map((bm, idx) => (
+              ].map((bm, idx) => (
                 <div
                   key={bm.name}
                   className={`flex flex-col items-center animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]`}
                   style={{
-                  animationDelay: `${idx * 200}ms`,
-                  animationDuration: '1200ms'
+                    animationDelay: `${idx * 200}ms`,
+                    animationDuration: '1200ms'
                   }}
                 >
                   <img
-                  src={bm.img}
-                  alt={bm.name}
-                  className="w-32 h-32 object-cover rounded-full shadow-lg border-4 border-pink-200 mb-3 transition-transform duration-500 group-hover:scale-110 hover:rotate-[6deg] hover:shadow-2xl"
+                    src={bm.img}
+                    alt={bm.name}
+                    className="w-32 h-32 object-cover rounded-full shadow-lg border-4 border-pink-200 mb-3 transition-transform duration-500 group-hover:scale-110 hover:rotate-[6deg] hover:shadow-2xl"
                   />
                   <span className="font-serif text-lg text-gray-700 animate-text-pop">{bm.name}</span>
                 </div>
-                ))}
+              ))}
             </div>
           </div>
           {/* Groomsmen */}
           <div>
             <h3 className="text-2xl font-soul mb-6 text-blue-600">Groomsmen</h3>
             <div className="flex flex-row justify-center gap-6">
-                {[
+              {[
                 {
                   name: "Mario Wessels",
                   img: "/img/mario.png"
@@ -904,23 +901,23 @@ was something special.
                   name: "Luke Kramer",
                   img: "/img/luke.jpeg"
                 }
-                ].map((gm, idx) => (
+              ].map((gm, idx) => (
                 <div
                   key={gm.name}
                   className={`flex flex-col items-center animate-on-scroll opacity-0 translate-y-8 duration-[1500ms]`}
                   style={{
-                  animationDelay: `${idx * 200}ms`,
-                  animationDuration: '1200ms'
+                    animationDelay: `${idx * 200}ms`,
+                    animationDuration: '1200ms'
                   }}
                 >
                   <img
-                  src={gm.img}
-                  alt={gm.name}
-                  className="w-32 h-32 object-cover rounded-full shadow-lg border-4 border-blue-200 mb-3 transition-transform duration-500 group-hover:scale-110 hover:rotate-[-6deg] hover:shadow-2xl"
+                    src={gm.img}
+                    alt={gm.name}
+                    className="w-32 h-32 object-cover rounded-full shadow-lg border-4 border-blue-200 mb-3 transition-transform duration-500 group-hover:scale-110 hover:rotate-[-6deg] hover:shadow-2xl"
                   />
                   <span className="font-serif text-lg text-gray-700 animate-text-pop">{gm.name}</span>
                 </div>
-                ))}
+              ))}
             </div>
           </div>
         </div>
@@ -928,13 +925,13 @@ was something special.
 
       {/* Countdown Section */}
       <section className="py-12 px-4 bg-gradient-radial from-gray-50 to-gray-100">
-        
+
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-soul mb-8 text-shimmer pb-4">Countdown to the Big Day</h2>
           <div className="mt-12 flex items-center justify-center space-x-2 animate-bounce-slow bg-glass py-4 px-8 rounded-full inline-block premium-border">
-              <Calendar className="w-6 h-6 text-red-500" />
-              <p className="text-lg md:text-xl tracking-wider">February 7, 2026</p>
-            </div>
+            <Calendar className="w-6 h-6 text-red-500" />
+            <p className="text-lg md:text-xl tracking-wider">February 7, 2026</p>
+          </div>
           <Countdown weddingDate={weddingDate} />
         </div>
       </section>
