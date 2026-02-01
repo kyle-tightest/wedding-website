@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const CAMERA_SOUND = "/audio/camera.mp3";
 
@@ -10,8 +10,11 @@ export default function PhotoBooth() {
   const [isUploading, setIsUploading] = useState(false);
   const [cameraActive, setCameraActive] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [useRearCamera, setUseRearCamera] = useState(true); // default to rear camera
+  const [useRearCamera, setUseRearCamera] = useState(true);
   const [rearCameraAvailable, setRearCameraAvailable] = useState(false);
+  const [isCameraLoading, setIsCameraLoading] = useState(false);
+  const [cameraError, setCameraError] = useState<string | null>(null);
+  const activeStreamRef = useRef<MediaStream | null>(null);
 
   // Detect rear camera availability on mount
   useEffect(() => {
@@ -37,35 +40,76 @@ export default function PhotoBooth() {
 
   // Automatically start the camera on mount and when returning to camera view
   useEffect(() => {
-    let stream: MediaStream | null = null;
-    const startCamera = async () => {
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({
-          video: useRearCamera
-            ? { facingMode: { exact: "environment" } }
-            : { facingMode: "user" }
-        });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          await videoRef.current.play();
-        }
-      } catch (err) {
-        // fallback to front camera if rear is not available
-        if (useRearCamera) {
-          setUseRearCamera(false);
-        }
-        console.log("Could not access camera.");
+    const stopCurrentStream = () => {
+      if (activeStreamRef.current) {
+        activeStreamRef.current.getTracks().forEach((track) => track.stop());
+        activeStreamRef.current = null;
       }
-    };
-    if (cameraActive) startCamera();
-
-    return () => {
-      // Stop camera when leaving camera view
-      if (videoRef.current && videoRef.current.srcObject) {
-        const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-        tracks.forEach((track) => track.stop());
+      if (videoRef.current) {
         videoRef.current.srcObject = null;
       }
+    };
+
+    const startCamera = async () => {
+      stopCurrentStream();
+      setIsCameraLoading(true);
+      setCameraError(null);
+
+      try {
+        const constraints: MediaStreamConstraints = {
+          video: useRearCamera
+            ? { facingMode: "environment" }
+            : { facingMode: "user" }
+        };
+
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+        activeStreamRef.current = stream;
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          // Use onloadedmetadata to ensure video is ready before playing
+          videoRef.current.onloadedmetadata = async () => {
+            try {
+              await videoRef.current?.play();
+              setIsCameraLoading(false);
+
+              // Re-check for rear camera availability now that we have permission
+              if (!rearCameraAvailable) {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const hasRear = devices.some(
+                  (d) =>
+                    d.kind === "videoinput" &&
+                    (d.label.toLowerCase().includes("back") ||
+                      d.label.toLowerCase().includes("rear") ||
+                      d.label.toLowerCase().includes("environment"))
+                );
+                if (hasRear) setRearCameraAvailable(true);
+              }
+            } catch (e) {
+              console.error("Play error:", e);
+            }
+          };
+        }
+      } catch (err: any) {
+        console.error("Camera error:", err);
+        // Fallback to any camera if specific facing mode fails
+        if (useRearCamera) {
+          setUseRearCamera(false);
+        } else {
+          setCameraError("Could not access camera. Please check permissions.");
+          setIsCameraLoading(false);
+        }
+      }
+    };
+
+    if (cameraActive) {
+      startCamera();
+    } else {
+      stopCurrentStream();
+    }
+
+    return () => {
+      stopCurrentStream();
     };
   }, [cameraActive, useRearCamera]);
 
@@ -138,13 +182,41 @@ export default function PhotoBooth() {
           <div className="w-10 h-2 rounded-full bg-gray-700" />
         </div>
         {/* Camera preview */}
-        <div className="flex items-center justify-center w-full h-[420px] mt-8 mb-2 overflow-hidden rounded-[2rem] bg-gray-900 border-2 border-gray-800">
+        <div className="flex items-center justify-center w-full h-[420px] mt-8 mb-2 overflow-hidden rounded-[2rem] bg-gray-900 border-2 border-gray-800 relative">
+          {isCameraLoading && !photoDataUrl && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-900 z-10">
+              <div className="flex flex-col items-center">
+                <svg className="animate-spin h-10 w-10 text-white mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span className="text-white text-xs">Initializing...</span>
+              </div>
+            </div>
+          )}
+          {cameraError && !photoDataUrl && (
+            <div className="absolute inset-0 flex items-center justify-center bg-gray-900 z-10 px-4 text-center">
+              <div className="flex flex-col items-center">
+                <svg className="h-10 w-10 text-red-500 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span className="text-red-400 text-sm mb-4">{cameraError}</span>
+                <button
+                  onClick={() => setCameraActive(true)}
+                  className="px-4 py-2 bg-white text-gray-900 rounded-full text-xs font-bold uppercase"
+                >
+                  Retry
+                </button>
+              </div>
+            </div>
+          )}
           {!photoDataUrl ? (
             <video
               ref={videoRef}
               className="object-cover w-full h-full"
               autoPlay
               playsInline
+              muted
               width={320}
               height={420}
             />
